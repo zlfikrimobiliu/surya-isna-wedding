@@ -1,0 +1,106 @@
+// CONTOH: Versi Hybrid - Save ke Google Sheets DAN file JSON (backup)
+// Rename file ini menjadi rsvp.js jika ingin menggunakan
+
+import fs from 'fs';
+import path from 'path';
+
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { name, attendance, guestCount } = req.body;
+
+    // Validate input
+    if (!name || !attendance || !guestCount) {
+      return res.status(400).json({ error: 'Semua field harus diisi' });
+    }
+
+    const newRSVP = {
+      id: Date.now().toString(),
+      name,
+      attendance,
+      guestCount: parseInt(guestCount),
+      timestamp: new Date().toISOString(),
+    };
+
+    // Ganti dengan URL Google Apps Script Web App Anda
+    const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
+
+    let googleSheetsSuccess = false;
+
+    // 1. Coba simpan ke Google Sheets (jika URL tersedia)
+    if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            attendance,
+            guestCount: parseInt(guestCount),
+          }),
+        });
+
+        const result = await response.json();
+        googleSheetsSuccess = result.success === true;
+      } catch (error) {
+        console.error('Error saving to Google Sheets:', error);
+        // Continue to save to file as backup
+      }
+    }
+
+    // 2. Simpan ke file JSON sebagai backup
+    try {
+      const dataDir = path.join(process.cwd(), 'data');
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+
+      const filePath = path.join(dataDir, 'rsvp.json');
+      let rsvps = [];
+
+      if (fs.existsSync(filePath)) {
+        const fileData = fs.readFileSync(filePath, 'utf8');
+        rsvps = JSON.parse(fileData);
+      }
+
+      rsvps.push(newRSVP);
+      fs.writeFileSync(filePath, JSON.stringify(rsvps, null, 2));
+    } catch (error) {
+      console.error('Error saving to file:', error);
+    }
+
+    // Return success jika salah satu berhasil
+    if (googleSheetsSuccess || !GOOGLE_SCRIPT_URL) {
+      return res.status(200).json({
+        success: true,
+        message: googleSheetsSuccess
+          ? 'Konfirmasi kehadiran berhasil disimpan ke Google Sheets'
+          : 'Konfirmasi kehadiran berhasil disimpan',
+        data: newRSVP,
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: 'Konfirmasi kehadiran berhasil disimpan (backup)',
+        data: newRSVP,
+      });
+    }
+  } else if (req.method === 'GET') {
+    // Get all RSVPs from file
+    const filePath = path.join(process.cwd(), 'data', 'rsvp.json');
+
+    if (!fs.existsSync(filePath)) {
+      return res.status(200).json({ rsvps: [] });
+    }
+
+    const fileData = fs.readFileSync(filePath, 'utf8');
+    const rsvps = JSON.parse(fileData);
+
+    return res.status(200).json({ rsvps });
+  } else {
+    res.setHeader('Allow', ['GET', 'POST']);
+    return res.status(405).json({ error: `Method ${req.method} not allowed` });
+  }
+}
+

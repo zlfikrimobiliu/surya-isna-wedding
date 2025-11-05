@@ -1,0 +1,57 @@
+// CONTOH: File ini adalah template untuk integrasi Google Sheets
+// Rename file ini menjadi rsvp.js dan ganti GOOGLE_SCRIPT_URL dengan URL webhook Anda
+
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { name, attendance, guestCount } = req.body;
+
+    // Validate input
+    if (!name || !attendance || !guestCount) {
+      return res.status(400).json({ error: 'Semua field harus diisi' });
+    }
+
+    // Ganti dengan URL Google Apps Script Web App Anda
+    const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+
+    try {
+      // Kirim data ke Google Sheets via Google Apps Script
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          attendance,
+          guestCount: parseInt(guestCount),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        return res.status(200).json({
+          success: true,
+          message: 'Konfirmasi kehadiran berhasil disimpan ke Google Sheets',
+          data: {
+            name,
+            attendance,
+            guestCount: parseInt(guestCount),
+            timestamp: new Date().toISOString(),
+          },
+        });
+      } else {
+        throw new Error(result.error || 'Gagal menyimpan ke Google Sheets');
+      }
+    } catch (error) {
+      console.error('Error saving to Google Sheets:', error);
+      return res.status(500).json({
+        error: 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.',
+      });
+    }
+  } else {
+    res.setHeader('Allow', ['POST']);
+    return res.status(405).json({ error: `Method ${req.method} not allowed` });
+  }
+}
+

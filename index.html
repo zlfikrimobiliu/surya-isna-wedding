@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Opening Invitation -->
+    <section id="opening" class="opening-section">
+        <div class="opening-content">
+            <h1 class="couple-names">Isna & Surya</h1>
+            <p class="invitation-text">Tanpa mengurangi rasa hormat, kami mengundang anda untuk hadir di acara pernikahan kami.</p>
+            <button class="open-btn" onclick="openInvitation()">
+                <span>Buka Undangan</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content hidden">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#mempelai" class="nav-link">Mempelai</a>
+                <a href="#acara" class="nav-link">Acara</a>
+                <a href="#galeri" class="nav-link">Galeri</a>
+                <a href="#lokasi" class="nav-link">Lokasi</a>
+                <a href="#ucapan" class="nav-link">Ucapan</a>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="home" class="section home-section">
+            <div class="container">
+                <h2 class="section-title">The Wedding</h2>
+                <h1 class="main-title">Isna & Surya</h1>
+                <p class="wedding-date">14.12.2025</p>
+                <button class="save-date-btn">Save The Date</button>
+            </div>
+        </section>
+
+        <!-- Gallery Preview -->
+        <section id="galeri-preview" class="section gallery-preview">
+            <div class="gallery-slider">
+                <div class="gallery-item active">
+                    <div class="gallery-placeholder">Image 01</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 02</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 03</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 04</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 05</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 06</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 07</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">Image 08</div>
+                </div>
+            </div>
+            <div class="gallery-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+            </div>
+        </section>
+
+        <!-- Greeting Section -->
+        <section class="section greeting-section">
+            <div class="container">
+                <h2 class="section-title">Salam Sejahtera</h2>
+                <p class="greeting-text">Dengan segala kerendahan hati dan dengan ungkapan syukur, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri Resepsi Pernikahan kami.</p>
+            </div>
+        </section>
+
+        <!-- Mempelai Section -->
+        <section id="mempelai" class="section mempelai-section">
+            <div class="container">
+                <h2 class="section-title">Mempelai</h2>
+                <div class="mempelai-container">
+                    <div class="mempelai-card">
+                        <div class="mempelai-image">
+                            <div class="image-placeholder">Wanita</div>
+                        </div>
+                        <h3 class="mempelai-name">Isna Refiana</h3>
+                        <p class="mempelai-ig">@isnarefina</p>
+                    </div>
+                    <div class="mempelai-divider">
+                        <span>&</span>
+                    </div>
+                    <div class="mempelai-card">
+                        <div class="mempelai-image">
+                            <div class="image-placeholder">Pria</div>
+                        </div>
+                        <h3 class="mempelai-name">Surya Ariadi</h3>
+                        <p class="mempelai-ig">@surya_artfreedom</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Acara Section -->
+        <section id="acara" class="section acara-section">
+            <div class="container">
+                <h2 class="section-title">Hari Spesial</h2>
+                <div class="events-container">
+                    <div class="event-card">
+                        <h3 class="event-title">AKAD NIKAH</h3>
+                        <div class="event-date">
+                            <p class="day">Minggu</p>
+                            <p class="date-number">14</p>
+                            <p class="month-year">Desember 2025</p>
+                        </div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>10.00 WIB - Selesai</span>
+                        </div>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Rustic Republik Kediri</span>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <h3 class="event-title">RESEPSI PERNIKAHAN</h3>
+                        <div class="event-date">
+                            <p class="day">Minggu</p>
+                            <p class="date-number">14</p>
+                            <p class="month-year">Desember 2025</p>
+                        </div>
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>16.00 WIB - Selesai</span>
+                        </div>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Rustic Republik Kediri</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galeri Section -->
+        <section id="galeri" class="section galeri-section">
+            <div class="container">
+                <h2 class="section-title">Galeri</h2>
+                <div class="galeri-grid">
+                    <div class="galeri-item">
+                        <div class="galeri-placeholder">Photo 1</div>
+                    </div>
+                    <div class="galeri-item">
+                        <div class="galeri-placeholder">Photo 2</div>
+                    </div>
+                    <div class="galeri-item">
+                        <div class="galeri-placeholder">Photo 3</div>
+                    </div>
+                    <div class="galeri-item">
+                        <div class="galeri-placeholder">Photo 4</div>
+                    </div>
+                    <div class="galeri-item">
+                        <div class="galeri-placeholder">Photo 5</div>
+                    </div>
+                    <div class="galeri-item">
+                        <div class="galeri-placeholder">Photo 6</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lokasi Section -->
+        <section id="lokasi" class="section lokasi-section">
+            <div class="container">
+                <h2 class="section-title">Denah Lokasi</h2>
+                <p class="lokasi-subtitle">Resepsi Pernikahan</p>
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>Map Location</p>
+                    </div>
+                </div>
+                <button class="map-btn" onclick="openMap()">
+                    <i class="fas fa-directions"></i>
+                    Lihat Lokasi
+                </button>
+                <p class="map-hint">Klik untuk petunjuk arah</p>
+            </div>
+        </section>
+
+        <!-- Digital Envelope Section -->
+        <section class="section envelope-section">
+            <div class="container">
+                <h2 class="section-title">Amplop Digital</h2>
+                <p class="envelope-text">Doa Restu Anda merupakan karunia bagi kami.</p>
+                <button class="envelope-btn" onclick="toggleEnvelope()">
+                    Tampilkan Amplop Digital
+                </button>
+                <div id="envelope-details" class="envelope-details hidden">
+                    <p class="envelope-info">Silahkan bisa transfer melalui rekening berikut:</p>
+                    <div class="bank-info">
+                        <h4>BCA</h4>
+                        <div class="account-info">
+                            <p><strong>0901407915</strong></p>
+                            <p>ISNA REFIANA</p>
+                        </div>
+                        <button class="copy-btn" onclick="copyAccount()">
+                            <i class="fas fa-copy"></i> Salin
+                        </button>
+                    </div>
+                    <p class="envelope-note">Silakan konfirmasi transfer dengan isi form dibawah.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gift Section -->
+        <section class="section gift-section">
+            <div class="container">
+                <h2 class="section-title">Hadiah / Kado</h2>
+                <p class="gift-info">Silakan bisa mengirimkan hadiah ke alamat berikut:</p>
+                <div class="gift-address">
+                    <p><strong>Penerima:</strong></p>
+                    <p>Isna Refina, 085792788020</p>
+                    <p>Dsn Kendalrejo RT 3 RW 9 Kecamatan Talun - Blitar</p>
+                    <button class="copy-btn" onclick="copyAddress()">
+                        <i class="fas fa-copy"></i> Salin
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="section rsvp-section">
+            <div class="container">
+                <h2 class="section-title">RSVP</h2>
+                <p class="rsvp-text">Silakan konfirmasi kehadiran anda kepada kedua mempelai.</p>
+                <form class="rsvp-form" onsubmit="submitRSVP(event)">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nama" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="">Pilih Kehadiran</option>
+                            <option value="hadir">Berkenan hadir</option>
+                            <option value="tidak">Maaf tidak bisa hadir</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" placeholder="Jumlah Tamu" min="1" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Konfirm</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Ucapan Section -->
+        <section id="ucapan" class="section ucapan-section">
+            <div class="container">
+                <h2 class="section-title">Ucapan Selamat</h2>
+                <p class="ucapan-text">Silakan memberikan ucapan selamat kepada kedua mempelai.</p>
+                <form class="ucapan-form" onsubmit="submitUcapan(event)">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nama" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tuliskan ucapan selamat..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Kirim</button>
+                </form>
+                <div id="ucapan-list" class="ucapan-list">
+                    <div class="ucapan-item">
+                        <h4>zlfikri</h4>
+                        <p>May your marriage be filled with trust, respect, and love, but above all else, may it be filled with abundant joy. Congratulation!🕊️</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote Section -->
+        <section class="section quote-section">
+            <div class="container">
+                <p class="quote-text">"Kita adalah "ketersalingan". Saling mengisi kekosongan, saling melengkapi, saling membersamai, dan saling berdamai dengan segala kelebihan dan kekurangan yang kita miliki"</p>
+                <p class="quote-note">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
+                <h3 class="quote-signature">Isna & Surya</h3>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <!-- <p>Designed with ❤ by zlfikri.</p> -->
+            <p>Developed by zlfkri © 2025</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
