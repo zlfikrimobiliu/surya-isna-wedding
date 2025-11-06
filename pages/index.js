@@ -133,20 +133,35 @@ export default function Home() {
   }, [isOpen]);
 
   // Initialize AOS (Animate On Scroll) - only for main content, not opening
+  // Lazy load AOS untuk optimasi performa
   useEffect(() => {
     if (typeof window !== 'undefined' && isOpen) {
       // Delay AOS init to ensure images load first
       setTimeout(() => {
-        const AOS = require('aos');
-        AOS.init({
-          duration: 800,
-          easing: 'ease-in-out',
-          once: true,
-          offset: 100,
-          disable: false,
+        // Dynamic import untuk lazy load AOS
+        import('aos').then((AOS) => {
+          AOS.default.init({
+            duration: 600, // Reduced dari 800 untuk lebih smooth
+            easing: 'ease-out-cubic', // Better easing untuk smooth animation
+            once: true,
+            offset: 120, // Slightly increased untuk better trigger point
+            // Optimasi performa untuk smooth animation
+            disableMutationObserver: false,
+            debounceDelay: 10, // Reduced untuk lebih responsive
+            throttleDelay: 50, // Reduced untuk lebih smooth
+            // Use hardware acceleration
+            useClassNames: false,
+          });
+          AOS.default.refresh();
+          
+          // Refresh AOS again after a short delay to ensure all sections are detected
+          setTimeout(() => {
+            AOS.default.refresh();
+          }, 200); // Reduced delay
+        }).catch((err) => {
+          console.error('Error loading AOS:', err);
         });
-        AOS.refresh();
-      }, 500);
+      }, 300); // Reduced delay untuk faster init
     }
   }, [isOpen]);
 
@@ -242,8 +257,17 @@ export default function Home() {
 
   const fetchUcapan = async () => {
     try {
+      // Default ucapan yang selalu ada di posisi pertama
+      const defaultUcapan = {
+        id: 'default',
+        name: 'zlfikri',
+        message: 'May your marriage be filled with trust, respect, and love, but above all else, may it be filled with abundant joy. Congratulation!🕊️',
+        verified: true, // Flag untuk verified/checklist icon
+      };
+
       const res = await fetch('/api/ucapan');
       const data = await res.json();
+      
       if (data.ucapan && data.ucapan.length > 0) {
         const normalized = data.ucapan.map((item) => {
           const raw = (item.attendance || '').toString().trim().toLowerCase();
@@ -252,19 +276,23 @@ export default function Home() {
           if (raw === 'maaf tidak bisa hadir' || raw === 'tidak' || raw === 'tidak hadir') attendance = 'tidak';
           return { ...item, attendance };
         });
-        setUcapanList(normalized);
+        // Default ucapan selalu di posisi pertama, lalu diikuti ucapan dari Google Sheets
+        setUcapanList([defaultUcapan, ...normalized]);
       } else {
-        // Default ucapan
-        setUcapanList([
-          {
-            id: 'default',
-            name: 'zlfikri',
-            message: 'May your marriage be filled with trust, respect, and love, but above all else, may it be filled with abundant joy. Congratulation!🕊️',
-          },
-        ]);
+        // Jika tidak ada ucapan dari Google Sheets, hanya tampilkan default
+        setUcapanList([defaultUcapan]);
       }
     } catch (error) {
       console.error('Error fetching ucapan:', error);
+      // Jika error, tetap tampilkan default ucapan
+      setUcapanList([
+        {
+          id: 'default',
+          name: 'zlfikri',
+          message: 'May your marriage be filled with trust, respect, and love, but above all else, may it be filled with abundant joy. Congratulation!🕊️',
+          verified: true,
+        },
+      ]);
     }
   };
 
@@ -281,26 +309,12 @@ export default function Home() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 800); // Match animation duration
 
-    // Try autoplay music on this user gesture
-    setTimeout(() => {
-      if (!hasTriedAutoplayRef.current && audioRef.current) {
-        hasTriedAutoplayRef.current = true;
-        try {
-          audioRef.current.volume = 0.6;
-          const p = audioRef.current.play();
-          if (p && typeof p.then === 'function') {
-            p.then(() => setIsMusicPlaying(true)).catch(() => {});
-          } else {
-            setIsMusicPlaying(true);
-          }
-        } catch (_) {}
-      }
-    }, 100);
+    // Musik akan terputar otomatis dari event listener global saat user klik
   };
 
 
   const copyAccount = () => {
-    const text = '0901407915\nISNA REFIANA';
+    const text = '0901407915\nISNA REFINA RAHMAWATI';
     navigator.clipboard.writeText(text).then(() => {
       showNotification('Nomor rekening berhasil disalin!');
     });
@@ -449,12 +463,24 @@ export default function Home() {
           isNew: true, // Flag for animation
         };
         
-        // Remove default ucapan if it exists and add new one
-        const filteredList = ucapanList.filter(ucapan => ucapan.id !== 'default');
-        setUcapanList([newUcapan, ...filteredList]);
+        // Pastikan default ucapan tetap di posisi pertama, lalu tambahkan ucapan baru setelahnya
+        const defaultUcapan = ucapanList.find(ucapan => ucapan.id === 'default');
+        const otherUcapan = ucapanList.filter(ucapan => ucapan.id !== 'default');
         
-        // Reset to first position to show new ucapan
-        setCurrentUcapanIndex(0);
+        // Urutan: default (jika ada) -> new ucapan -> ucapan lainnya
+        if (defaultUcapan) {
+          setUcapanList([defaultUcapan, newUcapan, ...otherUcapan]);
+        } else {
+          setUcapanList([newUcapan, ...otherUcapan]);
+        }
+        
+        // Tetap di posisi pertama (default ucapan) atau scroll ke new ucapan
+        // Jika ada default, new ucapan ada di index 1
+        if (defaultUcapan) {
+          setCurrentUcapanIndex(0); // Tetap di default ucapan
+        } else {
+          setCurrentUcapanIndex(0); // Show new ucapan
+        }
         
         // Scroll to new ucapan after a short delay
         setTimeout(() => {
@@ -487,16 +513,35 @@ export default function Home() {
 
   // Toggle music play/pause
   const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isMusicPlaying) {
-        audioRef.current.pause();
-        setIsMusicPlaying(false);
-        showNotification('Musik dihentikan', 'info');
+    if (!audioRef.current) return;
+    
+    const audio = audioRef.current;
+    
+    // Check actual playback state, bukan hanya state
+    const isActuallyPlaying = !audio.paused && !audio.ended && audio.readyState > 2;
+    
+    if (isActuallyPlaying || isMusicPlaying) {
+      // Pause musik
+      audio.pause();
+      // Force pause dengan set currentTime
+      audio.currentTime = audio.currentTime;
+      setIsMusicPlaying(false);
+      showNotification('Musik dihentikan', 'info');
+    } else {
+      // Play musik
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsMusicPlaying(true);
+            showNotification('Musik dimainkan', 'success');
+          })
+          .catch(error => {
+            console.error('Error playing audio:', error);
+            setIsMusicPlaying(false);
+            showNotification('Gagal memutar musik. Pastikan browser mengizinkan autoplay.', 'error');
+          });
       } else {
-        audioRef.current.play().catch(error => {
-          console.error('Error playing audio:', error);
-          showNotification('Gagal memutar musik. Pastikan browser mengizinkan autoplay.', 'error');
-        });
         setIsMusicPlaying(true);
         showNotification('Musik dimainkan', 'success');
       }
@@ -565,12 +610,12 @@ export default function Home() {
 
   const saveToCalendar = () => {
     // Event details
-    const eventTitle = 'Pernikahan Isna & Surya';
+    const eventTitle = 'Pernikahan Surya & Isna';
     const eventDate = '20251214'; // Format: YYYYMMDD
     const eventStartTime = '100000'; // 10:00 AM (format: HHMMSS)
     const eventEndTime = '140000'; // 2:00 PM (format: HHMMSS)
     const eventLocation = 'Venue Pernikahan'; // Ganti dengan lokasi sebenarnya
-    const eventDetails = 'Undangan Pernikahan Isna & Surya\n\nTanpa mengurangi rasa hormat, kami mengundang anda untuk hadir di acara pernikahan kami.';
+    const eventDetails = 'Undangan Pernikahan Surya & Isna\n\nTanpa mengurangi rasa hormat, kami mengundang anda untuk hadir di acara pernikahan kami.';
 
     // Format dates for Google Calendar (YYYYMMDDTHHMMSS)
     const startDateTime = `${eventDate}T${eventStartTime}`;
@@ -586,65 +631,94 @@ export default function Home() {
     showNotification('Google Calendar dibuka! Silakan simpan ke kalender Anda.');
   };
 
-  // Attempt autoplay on initial load (muted), then unmute on first user interaction
+  // Prepare audio element dan setup click listener untuk play music
   useEffect(() => {
-    if (!audioRef.current) return;
-    if (hasTriedAutoplayRef.current) return;
-    hasTriedAutoplayRef.current = true;
+    // Pastikan audio element sudah ready
+    if (audioRef.current) {
+      const audio = audioRef.current;
+      audio.loop = true;
+      audio.preload = 'auto';
+    }
 
-    try {
-      audioRef.current.muted = true;
-      audioRef.current.volume = 0;
-      const p = audioRef.current.play();
-      if (p && typeof p.then === 'function') {
-        p.then(() => setIsMusicPlaying(true)).catch(() => {});
-      } else {
-        setIsMusicPlaying(true);
-      }
-    } catch (_) {}
-
-    const unlock = () => {
-      if (!audioRef.current) return;
-      audioRef.current.muted = false;
-      const target = 0.6;
-      const step = 0.06;
-      const interval = setInterval(() => {
-        if (!audioRef.current) return clearInterval(interval);
-        let v = (audioRef.current.volume || 0) + step;
-        if (v >= target) {
-          v = target;
-          clearInterval(interval);
+    // Function untuk play music saat user interaction pertama
+    const playMusicOnInteraction = () => {
+      if (audioRef.current && !isMusicPlaying) {
+        try {
+          const audio = audioRef.current;
+          audio.muted = false;
+          audio.volume = 0.6;
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                setIsMusicPlaying(true);
+                console.log('Music started on first interaction');
+              })
+              .catch(error => {
+                console.warn('Failed to play music:', error);
+              });
+          } else {
+            setIsMusicPlaying(true);
+          }
+        } catch (error) {
+          console.warn('Error playing music:', error);
         }
-        audioRef.current.volume = v;
-      }, 80);
-
-      window.removeEventListener('click', unlock);
-      window.removeEventListener('touchstart', unlock);
-      window.removeEventListener('keydown', unlock);
+      }
+      // Remove listeners setelah musik terputar
+      document.removeEventListener('click', playMusicOnInteraction);
+      document.removeEventListener('touchstart', playMusicOnInteraction);
+      document.removeEventListener('keydown', playMusicOnInteraction);
     };
 
-    window.addEventListener('click', unlock, { once: true });
-    window.addEventListener('touchstart', unlock, { once: true });
-    window.addEventListener('keydown', unlock, { once: true });
-  }, []);
+    // Add event listeners untuk play music pada interaksi pertama
+    // Hanya jika belum terputar dan masih di opening section (!isOpen)
+    if (!isOpen) {
+      document.addEventListener('click', playMusicOnInteraction, { once: true });
+      document.addEventListener('touchstart', playMusicOnInteraction, { once: true });
+      document.addEventListener('keydown', playMusicOnInteraction, { once: true });
+    }
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('click', playMusicOnInteraction);
+      document.removeEventListener('touchstart', playMusicOnInteraction);
+      document.removeEventListener('keydown', playMusicOnInteraction);
+    };
+  }, [isOpen, isMusicPlaying]);
 
   return (
     <>
       <Head suppressHydrationWarning>
-        <title>Undangan Pernikahan - Isna & Surya</title>
-        <meta name="description" content="Undangan Pernikahan Isna & Surya" />
+        <title>Undangan Pernikahan - Surya & Isna</title>
+        <meta name="description" content="Undangan Pernikahan Surya & Isna" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-        {/* Preload critical images to speed up first paint */}
-        <link rel="preload" as="image" href="/images/gambar-home-new.jpg" />
-        <link rel="preload" as="image" href="/images/halaman-pertama.jpg" />
+        {/* Preload only critical images */}
+        <link rel="preload" as="image" href="/images/halaman-pertama.jpg" fetchPriority="high" />
+        <link rel="preload" as="image" href="/images/gambar-home-new.jpg" fetchPriority="high" />
+        {/* DNS prefetch untuk optimasi */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       </Head>
 
-      {/* Global audio element (rendered selalu agar bisa autoplay muted) */}
+      {/* Global audio element - Always rendered untuk autoplay */}
       <audio
         ref={audioRef}
         loop
-        preload="auto"
+        preload="metadata"
         style={{ display: 'none' }}
+        onPlay={() => {
+          // Sync state dengan actual playback
+          if (audioRef.current && !audioRef.current.paused) {
+            setIsMusicPlaying(true);
+          }
+        }}
+        onPause={() => {
+          // Sync state dengan actual playback
+          if (audioRef.current && audioRef.current.paused) {
+            setIsMusicPlaying(false);
+          }
+        }}
+        onEnded={() => setIsMusicPlaying(false)}
       >
         <source src="/audio/wedding-music.mp3" type="audio/mpeg" />
         <source src="/audio/wedding-music.ogg" type="audio/ogg" />
@@ -657,7 +731,7 @@ export default function Home() {
           <div className="opening-image-background">
             <img 
               src="/images/halaman-pertama.jpg" 
-              alt="Isna & Surya" 
+              alt="Surya & Isna" 
               className="opening-couple-image"
               loading="eager"
               decoding="sync"
@@ -684,7 +758,7 @@ export default function Home() {
           <div className="opening-content">
             <div className="opening-text-container">
               <p className="opening-label">Undangan</p>
-              <h1 className="couple-names">Isna & Surya</h1>
+              <h1 className="couple-names">Surya & Isna</h1>
               <button className="open-btn" onClick={openInvitation}>
                 <i className="fas fa-envelope"></i>
                 <span>Buka Undangan</span>
@@ -746,27 +820,13 @@ export default function Home() {
 
       {/* Music Button - Always visible when isOpen */}
       {isOpen && (
-        <>
-          <audio
-            ref={audioRef}
-            loop
-            preload="auto"
-            onPlay={() => setIsMusicPlaying(true)}
-            onPause={() => setIsMusicPlaying(false)}
-            onEnded={() => setIsMusicPlaying(false)}
-          >
-            <source src="/audio/wedding-music.mp3" type="audio/mpeg" />
-            <source src="/audio/wedding-music.ogg" type="audio/ogg" />
-            Browser Anda tidak mendukung audio.
-          </audio>
-          <button 
-            className={`music-btn ${isMusicPlaying ? 'playing' : ''}`} 
-            onClick={toggleMusic}
-            aria-label={isMusicPlaying ? 'Hentikan musik' : 'Putar musik'}
-          >
-            <i className="fas fa-music"></i>
-          </button>
-        </>
+        <button 
+          className={`music-btn ${isMusicPlaying ? 'playing' : ''}`} 
+          onClick={toggleMusic}
+          aria-label={isMusicPlaying ? 'Hentikan musik' : 'Putar musik'}
+        >
+          <i className="fas fa-music"></i>
+        </button>
       )}
 
       {/* Main Content */}
@@ -775,7 +835,14 @@ export default function Home() {
           {/* Home Section */}
           <section id="home" className="section home-section">
             <div className="home-background-image">
-              <img src="/images/bg-1.jpg" alt="Background" className="bg-image" />
+              <img 
+                src="/images/bg-1.jpg" 
+                alt="Background" 
+                className="bg-image"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+              />
               <div className="home-background-overlay"></div>
             </div>
             <div className="home-background-decorations">
@@ -789,7 +856,7 @@ export default function Home() {
                 <div className="couple-photo-circle">
                   <img 
                     src="/images/gambar-home-new.jpg" 
-                    alt="Isna & Surya" 
+                    alt="Surya & Isna" 
                     className="couple-photo"
                     loading="eager"
                     decoding="sync"
@@ -812,7 +879,7 @@ export default function Home() {
                   <div className="photo-leaf-overlay"></div>
                 </div>
               </div>
-              <h1 className="main-title">Isna & Surya</h1>
+              <h1 className="main-title">Surya & Isna</h1>
               <p className="wedding-date">14.12.2025</p>
               <div className="save-date-container">
                 <button className="save-date-btn" onClick={saveToCalendar}>
@@ -888,7 +955,6 @@ export default function Home() {
                       }}
                     />
                     <div className="gallery-preview-overlay">
-                      <div className="stripes-overlay"></div>
                     </div>
                   </div>
                 </SwiperSlide>
@@ -896,14 +962,84 @@ export default function Home() {
             </Swiper>
           </section>
 
-          {/* Greeting Section */}
-          <section className="section greeting-section" data-aos="fade-up">
+          {/* Wedding Prayer Section */}
+          <section id="wedding-prayer" className="section wedding-prayer-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <h2 className="section-title" data-aos="fade-down">Salam Sejahtera</h2>
-              <p className="greeting-text" data-aos="fade-up" data-aos-delay="200">
-                Dengan segala kerendahan hati dan dengan ungkapan syukur, kami mengundang Bapak/Ibu/Saudara/i untuk
-                menghadiri Resepsi Pernikahan kami.
-              </p>
+              <div className="wedding-prayer-card" data-aos="fade-up" data-aos-duration="800">
+                {/* Decorative Wedding Bouquet - Minimalist Elegant */}
+                <div className="wedding-prayer-plant" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">
+                  <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" className="plant-svg">
+                    {/* Top circular arrangement - 6 blurred spheres */}
+                    <circle cx="100" cy="25" r="8" fill="#c0c0c0" opacity="0.6" filter="url(#blur)"/>
+                    <circle cx="100" cy="25" r="6" fill="#c0c0c0" opacity="0.4"/>
+                    
+                    <circle cx="75" cy="35" r="7" fill="#c0c0c0" opacity="0.5" filter="url(#blur)"/>
+                    <circle cx="75" cy="35" r="5" fill="#c0c0c0" opacity="0.3"/>
+                    
+                    <circle cx="125" cy="35" r="7" fill="#c0c0c0" opacity="0.5" filter="url(#blur)"/>
+                    <circle cx="125" cy="35" r="5" fill="#c0c0c0" opacity="0.3"/>
+                    
+                    <circle cx="88" cy="50" r="6" fill="#c0c0c0" opacity="0.5" filter="url(#blur)"/>
+                    <circle cx="88" cy="50" r="4" fill="#c0c0c0" opacity="0.3"/>
+                    
+                    <circle cx="112" cy="50" r="6" fill="#c0c0c0" opacity="0.5" filter="url(#blur)"/>
+                    <circle cx="112" cy="50" r="4" fill="#c0c0c0" opacity="0.3"/>
+                    
+                    <circle cx="100" cy="60" r="6" fill="#c0c0c0" opacity="0.5" filter="url(#blur)"/>
+                    <circle cx="100" cy="60" r="4" fill="#c0c0c0" opacity="0.3"/>
+                    
+                    {/* Two smaller spheres on sides */}
+                    <circle cx="70" cy="55" r="4" fill="#c0c0c0" opacity="0.4" filter="url(#blur)"/>
+                    <circle cx="130" cy="55" r="4" fill="#c0c0c0" opacity="0.4" filter="url(#blur)"/>
+                    
+                    {/* Tiny dots on outer sides */}
+                    <circle cx="60" cy="60" r="2" fill="#c0c0c0" opacity="0.3" filter="url(#blur)"/>
+                    <circle cx="140" cy="60" r="2" fill="#c0c0c0" opacity="0.3" filter="url(#blur)"/>
+                    
+                    {/* Central vertical stem */}
+                    <path d="M100 60 L100 100" stroke="#c0c0c0" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.6"/>
+                    
+                    {/* Swirling lines/leaves from stem - left side */}
+                    <path d="M100 75 Q85 70 80 85 Q85 90 95 88" stroke="#c0c0c0" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.5"/>
+                    <path d="M100 85 Q90 80 85 95 Q90 100 98 98" stroke="#c0c0c0" strokeWidth="1.8" fill="none" strokeLinecap="round" opacity="0.4"/>
+                    
+                    {/* Swirling lines/leaves from stem - right side */}
+                    <path d="M100 75 Q115 70 120 85 Q115 90 105 88" stroke="#c0c0c0" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.5"/>
+                    <path d="M100 85 Q110 80 115 95 Q110 100 102 98" stroke="#c0c0c0" strokeWidth="1.8" fill="none" strokeLinecap="round" opacity="0.4"/>
+                    
+                    {/* Lower decorative elements */}
+                    <path d="M100 100 Q95 105 90 110" stroke="#c0c0c0" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.3"/>
+                    <path d="M100 100 Q105 105 110 110" stroke="#c0c0c0" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.3"/>
+                    
+                    {/* Blur filter definition */}
+                    <defs>
+                      <filter id="blur">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                
+                {/* Quran Verse */}
+                <div className="wedding-prayer-verse" data-aos="fade-up" data-aos-delay="100">
+                  <p className="quran-verse-text">
+                    Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.
+                  </p>
+                  <p className="quran-verse-ref">(QS Ar-Rum 21)</p>
+                </div>
+              </div>
+              
+              {/* The Wedding Of Heading */}
+              <div className="wedding-prayer-heading" data-aos="fade-up" data-aos-delay="200">
+                <h2 className="wedding-of-title">The Wedding Of</h2>
+              </div>
+              
+              {/* Prayer Text */}
+              <div className="wedding-prayer-text" data-aos="fade-up" data-aos-delay="300">
+                <p className="prayer-text">
+                  Ya Allah, dengan segala kesucian hati, kami bersujud memohon Ridho-Mu, untuk menuju Sunnah Rasul-Mu, membentuk keluarga yang sakinah, mawaddah, warohmah
+                </p>
+              </div>
             </div>
           </section>
 
@@ -911,7 +1047,7 @@ export default function Home() {
           <section id="mempelai" className="section mempelai-section" data-aos="fade-up">
             <div className="container">
               <h2 className="mempelai-section-title" data-aos="fade-down">Mempelai</h2>
-              <p className="mempelai-subtitle" data-aos="fade-down" data-aos-delay="100">Wanita & Pria</p>
+              <p className="mempelai-subtitle" data-aos="fade-down" data-aos-delay="100">Pria & Wanita</p>
               <div className="mempelai-decorative-line" data-aos="fade-down" data-aos-delay="200"></div>
               <div className="mempelai-container">
                 <div className="mempelai-photo-container" data-aos="zoom-in" data-aos-delay="200">
@@ -920,9 +1056,9 @@ export default function Home() {
                       src="/images/gambar-2.jpg"
                       alt="Mempelai"
                       className="mempelai-photo"
-                      loading="eager"
-                      decoding="sync"
-                      fetchpriority="high"
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority="low"
                       style={{
                         imageRendering: 'auto',
                         WebkitImageRendering: 'auto',
@@ -939,20 +1075,6 @@ export default function Home() {
                 </div>
                 <div className="mempelai-names-container" data-aos="fade-up" data-aos-delay="300">
                   <div className="mempelai-name-wrapper">
-                    <h3 className="mempelai-name">Isna Refiana</h3>
-                    <a 
-                      href="https://www.instagram.com/isnarefina/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="mempelai-ig"
-                    >
-                      <i className="fab fa-instagram"></i> isnarefina
-                    </a>
-                  </div>
-                  <div className="mempelai-divider">
-                    <span>&</span>
-                  </div>
-                  <div className="mempelai-name-wrapper">
                     <h3 className="mempelai-name">Surya Ariadi</h3>
                     <a 
                       href="https://www.instagram.com/surya_artfreedom/" 
@@ -961,6 +1083,20 @@ export default function Home() {
                       className="mempelai-ig"
                     >
                       <i className="fab fa-instagram"></i> surya_artfreedom
+                    </a>
+                  </div>
+                  <div className="mempelai-divider">
+                    <span>&</span>
+                  </div>
+                  <div className="mempelai-name-wrapper">
+                    <h3 className="mempelai-name">Isna Refina</h3>
+                    <a 
+                      href="https://www.instagram.com/isnarefina/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="mempelai-ig"
+                    >
+                      <i className="fab fa-instagram"></i> isnarefina
                     </a>
                   </div>
                 </div>
@@ -1027,9 +1163,9 @@ export default function Home() {
           </section>
 
           {/* Galeri Section */}
-          <section id="galeri" className="section galeri-section">
+          <section id="galeri" className="section galeri-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <div className="galeri-header">
+              <div className="galeri-header" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">
                 <h2 className="galeri-title">Galeri</h2>
                 <div className="galeri-title-line"></div>
               </div>
@@ -1038,6 +1174,9 @@ export default function Home() {
                 className="galeri-main-container"
                 onMouseEnter={() => setIsGalleryPaused(true)}
                 onMouseLeave={() => setIsGalleryPaused(false)}
+                data-aos="fade-up"
+                data-aos-delay="200"
+                data-aos-duration="600"
               >
                 <button 
                   className="galeri-nav-btn galeri-nav-prev" 
@@ -1054,9 +1193,9 @@ export default function Home() {
                 src={`/images/${photoFiles[currentGalleryIndex]}`} 
                     alt={`Photo ${currentGalleryIndex + 1}`}
                     className="galeri-main-img"
-                    loading="eager"
-                    decoding="sync"
-                    fetchpriority="high"
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority={currentGalleryIndex === 0 ? "high" : "low"}
                     style={{
                       imageRendering: 'auto',
                       WebkitImageRendering: 'auto',
@@ -1085,6 +1224,9 @@ export default function Home() {
                 className="galeri-thumbnails"
                 onMouseEnter={() => setIsGalleryPaused(true)}
                 onMouseLeave={() => setIsGalleryPaused(false)}
+                data-aos="fade-up"
+                data-aos-delay="300"
+                data-aos-duration="600"
               >
                 {[...Array(8)].map((_, i) => (
                   <div 
@@ -1099,8 +1241,9 @@ export default function Home() {
                           src={`/images/${photoFiles[i]}`} 
                       alt={`Photo ${i + 1}`}
                       className="galeri-thumbnail-img"
-                      loading={i < 4 ? "eager" : "lazy"}
+                      loading="lazy"
                       decoding="async"
+                      fetchpriority={i === currentGalleryIndex ? "high" : "low"}
                       style={{
                         imageRendering: 'auto',
                         WebkitImageRendering: 'auto',
@@ -1117,9 +1260,9 @@ export default function Home() {
           </section>
 
           {/* Lokasi Section */}
-          <section id="lokasi" className="section lokasi-section">
+          <section id="lokasi" className="section lokasi-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <div className="lokasi-banner">
+              <div className="lokasi-banner" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">
                 <div className="lokasi-banner-content">
                   <h2 className="lokasi-banner-title">Denah Lokasi</h2>
                   <p className="lokasi-banner-subtitle">Resepsi Pernikahan</p>
@@ -1136,7 +1279,7 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <div className="map-container">
+              <div className="map-container" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15863.123456789!2d112.0119!3d-7.8239!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDknMjYuMCJTIDExMsKwMDAnNDIuOCJF!5e0!3m2!1sid!2sid!4v1234567890!5m2!1sid!2sid"
                   width="100%"
@@ -1149,25 +1292,25 @@ export default function Home() {
                   title="Lokasi Resepsi Pernikahan"
                 ></iframe>
               </div>
-              <button className="map-btn" onClick={openMap}>
+              <button className="map-btn" onClick={openMap} data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">
                 <i className="fas fa-directions"></i>
                 Lihat Lokasi
               </button>
-              <p className="map-hint">Klik untuk petunjuk arah</p>
+              <p className="map-hint" data-aos="fade-up" data-aos-delay="350" data-aos-duration="600">Klik untuk petunjuk arah</p>
             </div>
           </section>
 
           {/* Digital Envelope Section */}
-          <section className="section envelope-section">
+          <section className="section envelope-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <h2 className="section-title">Amplop Digital</h2>
-              <p className="envelope-text">Doa Restu Anda merupakan karunia bagi kami.</p>
-              <button className="envelope-btn" onClick={() => setShowEnvelope(!showEnvelope)}>
+              <h2 className="section-title" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">Amplop Digital</h2>
+              <p className="envelope-text" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Doa Restu Anda merupakan karunia bagi kami.</p>
+              <button className="envelope-btn" onClick={() => setShowEnvelope(!showEnvelope)} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
                 Tampilkan Amplop Digital
               </button>
               {showEnvelope && (
-                <div className="envelope-details">
-                  <div className="envelope-section-transfer">
+                <div className="envelope-details" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+                  <div className="envelope-section-transfer" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">
                     <p className="envelope-info">Silahkan bisa transfer melalui rekening berikut:</p>
                     <div className="bank-info">
                       <div className="bank-logo">
@@ -1184,7 +1327,7 @@ export default function Home() {
                         <p>
                           <strong>0901407915</strong>
                         </p>
-                        <p>ISNA REFIANA</p>
+                        <p>ISNA REFINA RAHMAWATI</p>
                       </div>
                       <button className="copy-btn" onClick={copyAccount}>
                         <i className="fas fa-copy"></i> Salin
@@ -1193,7 +1336,7 @@ export default function Home() {
                     <p className="envelope-note">Silakan konfirmasi transfer dengan isi form dibawah.</p>
                   </div>
                   
-                  <div className="envelope-section-gift">
+                  <div className="envelope-section-gift" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
                     <h3 className="gift-section-title">Hadiah / Kado</h3>
                     <p className="gift-info">Silakan bisa mengirimkan hadiah ke alamat berikut:</p>
                     <div className="gift-address">
@@ -1213,11 +1356,11 @@ export default function Home() {
           </section>
 
           {/* RSVP Section */}
-          <section className="section rsvp-section">
+          <section className="section rsvp-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <h2 className="section-title">RSVP</h2>
-              <p className="rsvp-text">Silakan konfirmasi kehadiran anda kepada kedua mempelai.</p>
-              <form className="rsvp-form" onSubmit={handleRSVP}>
+              <h2 className="section-title" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">RSVP</h2>
+              <p className="rsvp-text" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Silakan konfirmasi kehadiran anda kepada kedua mempelai.</p>
+              <form className="rsvp-form" onSubmit={handleRSVP} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
                 <div className="form-group">
                   <input type="text" name="name" placeholder="Nama" required />
                 </div>
@@ -1239,11 +1382,11 @@ export default function Home() {
           </section>
 
           {/* Ucapan Section */}
-          <section id="ucapan" className="section ucapan-section">
+          <section id="ucapan" className="section ucapan-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <h2 className="section-title">Ucapan Selamat</h2>
-              <p className="ucapan-text">Silakan memberikan ucapan selamat kepada kedua mempelai.</p>
-              <form className="ucapan-form" onSubmit={handleUcapan}>
+              <h2 className="section-title" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">Ucapan Selamat</h2>
+              <p className="ucapan-text" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Silakan memberikan ucapan selamat kepada kedua mempelai.</p>
+              <form className="ucapan-form" onSubmit={handleUcapan} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
                 <div className="form-group">
                   <input type="text" name="name" placeholder="Nama" required />
                 </div>
@@ -1273,45 +1416,10 @@ export default function Home() {
                 className="ucapan-list"
                 onMouseEnter={() => setIsUcapanPaused(true)}
                 onMouseLeave={() => setIsUcapanPaused(false)}
+                data-aos="fade-up"
+                data-aos-delay="300"
+                data-aos-duration="600"
               >
-                {/* Navigation arrows */}
-                {ucapanList.length > ucapanDisplayCount && (
-                  <>
-                    <button
-                      className="ucapan-nav-btn ucapan-nav-prev"
-                      onClick={() => {
-                        setIsTransitioning(true);
-                        setTimeout(() => {
-                          setCurrentUcapanIndex((prev) => {
-                            const maxIndex = Math.max(0, ucapanList.length - ucapanDisplayCount);
-                            return prev <= 0 ? maxIndex : prev - 1;
-                          });
-                          setTimeout(() => setIsTransitioning(false), 100);
-                        }, 300);
-                      }}
-                      aria-label="Previous ucapan"
-                    >
-                      <i className="fas fa-chevron-left"></i>
-                    </button>
-                    <button
-                      className="ucapan-nav-btn ucapan-nav-next"
-                      onClick={() => {
-                        setIsTransitioning(true);
-                        setTimeout(() => {
-                          setCurrentUcapanIndex((prev) => {
-                            const maxIndex = Math.max(0, ucapanList.length - ucapanDisplayCount);
-                            return prev >= maxIndex ? 0 : prev + 1;
-                          });
-                          setTimeout(() => setIsTransitioning(false), 100);
-                        }, 300);
-                      }}
-                      aria-label="Next ucapan"
-                    >
-                      <i className="fas fa-chevron-right"></i>
-                    </button>
-                  </>
-                )}
-                
                 {/* Pagination indicator */}
                 {ucapanList.length > ucapanDisplayCount && (
                   <div className="ucapan-pagination">
@@ -1352,7 +1460,12 @@ export default function Home() {
                           style={{ animationDelay: `${displayIndex * 0.15}s` }}
                         >
                           <div className="ucapan-header">
-                            <h4>{ucapan.name}</h4>
+                            <h4>
+                              {ucapan.name}
+                              {ucapan.verified && (
+                                <i className="fas fa-check-circle ucapan-verified-icon" title="Verified"></i>
+                              )}
+                            </h4>
                             {ucapan.relationship && (
                               <span className="ucapan-relationship">{ucapan.relationship}</span>
                             )}
@@ -1373,22 +1486,22 @@ export default function Home() {
           </section>
 
           {/* Quote Section */}
-          <section className="section quote-section">
+          <section className="section quote-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
             <div className="container">
-              <p className="quote-text">
+              <p className="quote-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
                 "Kita adalah "ketersalingan". Saling mengisi kekosongan, saling melengkapi, saling membersamai, dan
                 saling berdamai dengan segala kelebihan dan kekurangan yang kita miliki"
               </p>
-              <p className="quote-note">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
-              <div className="quote-photo-container">
+              <p className="quote-note" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
+              <div className="quote-photo-container" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="600">
                 <div className="quote-photo-circle">
                   <img 
                     src="/images/gambar-home-new.jpg" 
-                    alt="Isna & Surya" 
+                    alt="Surya & Isna" 
                     className="quote-photo"
-                    loading="eager"
-                    decoding="sync"
-                    fetchpriority="high"
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority="low"
                     onError={(e) => {
                       if (e.target && e.target.parentElement) {
                         console.error('Error loading quote photo:', e.target.src);
@@ -1400,12 +1513,12 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div className="quote-feather-decoration">
+                <div className="quote-feather-decoration" data-aos="fade-up" data-aos-delay="250" data-aos-duration="600">
                   <div className="feather-left"></div>
                   <div className="feather-right"></div>
                 </div>
               </div>
-              <h3 className="quote-signature">Isna & Surya</h3>
+              <h3 className="quote-signature" data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">Surya & Isna</h3>
             </div>
           </section>
 

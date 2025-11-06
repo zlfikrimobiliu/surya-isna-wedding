@@ -4,7 +4,7 @@
 const weddingConfig = {
     // Couple Information
     couple: {
-        name1: "Isna Refiana",
+        name1: "Isna Refina",
         name2: "Surya Ariadi",
         ig1: "isnarefina",
         ig2: "surya_artfreedom",
@@ -44,7 +44,7 @@ const weddingConfig = {
     bankAccount: {
         bank: "BCA",
         accountNumber: "0901407915",
-        accountName: "ISNA REFIANA"
+        accountName: "ISNA REFINA RAHMAWATI"
     },
     
     // Gift Address

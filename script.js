@@ -89,7 +89,7 @@ function toggleEnvelope() {
 // Copy Account Number
 function copyAccount() {
     const accountNumber = '0901407915';
-    const accountName = 'ISNA REFIANA';
+    const accountName = 'ISNA REFINA RAHMAWATI';
     const textToCopy = `${accountNumber}\n${accountName}`;
     
     navigator.clipboard.writeText(textToCopy).then(() => {
