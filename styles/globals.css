@@ -2629,6 +2629,65 @@ body {
         0 0 20px rgba(192, 192, 192, 0.1);
     transition: all 0.3s ease;
     position: relative;
+    /* Animation float (naik turun) dengan efek berjalan */
+    animation: ucapanFloat 4s ease-in-out infinite;
+}
+
+/* Animasi float untuk setiap item dengan delay berbeda agar tidak sinkron */
+.ucapan-item:nth-child(1) {
+    animation-delay: 0s;
+    animation-duration: 4s;
+}
+
+.ucapan-item:nth-child(2) {
+    animation-delay: 0.7s;
+    animation-duration: 4.5s;
+}
+
+.ucapan-item:nth-child(3) {
+    animation-delay: 1.4s;
+    animation-duration: 5s;
+}
+
+.ucapan-item:nth-child(4) {
+    animation-delay: 2.1s;
+    animation-duration: 4.2s;
+}
+
+.ucapan-item:nth-child(5) {
+    animation-delay: 2.8s;
+    animation-duration: 4.8s;
+}
+
+@keyframes ucapanFloat {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 20px rgba(192, 192, 192, 0.1);
+    }
+    25% {
+        transform: translateY(-6px) translateX(2px);
+        box-shadow: 
+            0 6px 25px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 25px rgba(192, 192, 192, 0.15);
+    }
+    50% {
+        transform: translateY(-10px) translateX(0);
+        box-shadow: 
+            0 8px 30px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2),
+            0 0 30px rgba(192, 192, 192, 0.2);
+    }
+    75% {
+        transform: translateY(-6px) translateX(-2px);
+        box-shadow: 
+            0 6px 25px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 25px rgba(192, 192, 192, 0.15);
+    }
 }
 
 @keyframes ucapanSlideIn {

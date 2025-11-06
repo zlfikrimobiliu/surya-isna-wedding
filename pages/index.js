@@ -27,6 +27,16 @@ export default function Home() {
   const hasTriedAutoplayRef = useRef(false);
 
   const totalSlides = 8;
+  const photoFiles = [
+    'photo-1.jpg',
+    'photo-2.jpg',
+    'photo-3.jpg',
+    'photo-4.JPG', // case-sensitive on Linux/Vercel
+    'photo-5.jpg',
+    'photo-6.JPG', // case-sensitive on Linux/Vercel
+    'photo-7.jpg',
+    'photo-8.jpg',
+  ];
 
   // Fetch ucapan on mount
   useEffect(() => {
@@ -624,6 +634,9 @@ export default function Home() {
         <title>Undangan Pernikahan - Isna & Surya</title>
         <meta name="description" content="Undangan Pernikahan Isna & Surya" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        {/* Preload critical images to speed up first paint */}
+        <link rel="preload" as="image" href="/images/gambar-home-new.jpg" />
+        <link rel="preload" as="image" href="/images/halaman-pertama.jpg" />
       </Head>
 
       {/* Global audio element (rendered selalu agar bisa autoplay muted) */}
@@ -775,7 +788,7 @@ export default function Home() {
               <div className="couple-photo-container">
                 <div className="couple-photo-circle">
                   <img 
-                    src="/images/gambar-home.jpg" 
+                    src="/images/gambar-home-new.jpg" 
                     alt="Isna & Surya" 
                     className="couple-photo"
                     loading="eager"
@@ -859,8 +872,8 @@ export default function Home() {
               {[...Array(8)].map((_, i) => (
                 <SwiperSlide key={i} className="gallery-slide">
                   <div className="gallery-preview-image">
-                    <img 
-                      src={`/images/photo-${i + 1}.jpg`}
+                        <img 
+                          src={`/images/${photoFiles[i]}`}
                       alt={`Photo ${i + 1}`}
                       className="gallery-preview-img"
                       loading="lazy"
@@ -1037,8 +1050,8 @@ export default function Home() {
                 </button>
                 
                 <div className="galeri-main-image">
-                  <img 
-                    src={`/images/photo-${currentGalleryIndex + 1}.jpg`}
+              <img 
+                src={`/images/${photoFiles[currentGalleryIndex]}`} 
                     alt={`Photo ${currentGalleryIndex + 1}`}
                     className="galeri-main-img"
                     loading="eager"
@@ -1082,8 +1095,8 @@ export default function Home() {
                       setCurrentGalleryIndex(i);
                     }}
                   >
-                    <img 
-                      src={`/images/photo-${i + 1}.jpg`}
+                        <img 
+                          src={`/images/${photoFiles[i]}`} 
                       alt={`Photo ${i + 1}`}
                       className="galeri-thumbnail-img"
                       loading={i < 4 ? "eager" : "lazy"}
@@ -1370,7 +1383,7 @@ export default function Home() {
               <div className="quote-photo-container">
                 <div className="quote-photo-circle">
                   <img 
-                    src="/images/gambar-home.jpg" 
+                    src="/images/gambar-home-new.jpg" 
                     alt="Isna & Surya" 
                     className="quote-photo"
                     loading="eager"
