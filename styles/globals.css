@@ -6,6 +6,7 @@
 
 html {
     scroll-behavior: smooth;
+    background: #000; /* Prevent white flash */
 }
 
 :root {
@@ -19,15 +20,12 @@ html {
     --gothic-accent: #8b8b8b;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
+    background: #000; /* Prevent white flash */
     /* Optimasi rendering untuk smooth scroll */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -48,19 +46,25 @@ body {
     -webkit-backface-visibility: hidden;
     perspective: 1000px;
     -webkit-perspective: 1000px;
-    /* Smooth transition */
+    /* Smooth transition dengan easing yang lebih halus */
     transition-property: transform, opacity;
-    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); /* ease-out-quart */
+    transition-duration: 0.4s;
+    /* Prevent white flash - ensure visibility before animation */
+    opacity: 0.99 !important; /* Almost visible to prevent white flash */
+    visibility: visible !important;
 }
 
 /* Optimasi untuk elemen yang belum di-animate */
 [data-aos]:not(.aos-animate) {
     will-change: transform, opacity;
+    opacity: 0.99 !important; /* Prevent white flash */
 }
 
 /* Optimasi untuk elemen yang sedang di-animate */
 [data-aos].aos-animate {
     will-change: auto;
+    opacity: 1 !important; /* Fully visible when animated */
 }
 
 /* Optimasi untuk child elements - hanya untuk elemen yang perlu */
@@ -510,6 +514,30 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    background: #000; /* Prevent white flash between sections */
+    position: relative;
+}
+
+/* Special handling for home section - no min-height constraint */
+.home-section.section {
+    min-height: 100vh;
+}
+
+/* Ensure no gap between home and next section */
+.home-section + .section {
+    margin-top: 0;
+}
+
+/* Special handling for gallery preview after home */
+.home-section + .gallery-preview {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Special handling for wedding prayer after gallery preview */
+.gallery-preview + .wedding-prayer-section {
+    margin-top: 0;
+    padding-top: 4rem;
 }
 
 .container {
@@ -538,6 +566,10 @@ body {
     align-items: flex-start;
     justify-content: center;
     padding-top: 2rem;
+    /* Prevent white flash during scroll */
+    z-index: 1;
+    /* Smooth transition to next section */
+    transition: opacity 0.3s ease-out;
 }
 
 .home-background-image {
@@ -547,6 +579,10 @@ body {
     width: 100%;
     height: 100%;
     z-index: 0;
+    /* Prevent white flash during scroll */
+    background: #000;
+    /* Smooth transition */
+    transition: opacity 0.3s ease-out;
 }
 
 .bg-image {
@@ -555,6 +591,10 @@ body {
     object-fit: cover;
     object-position: center;
     filter: brightness(0.4) contrast(1.1);
+    /* Prevent white flash - ensure image loads smoothly */
+    background: #000;
+    /* Smooth transition */
+    transition: opacity 0.3s ease-out;
 }
 
 .home-background-overlay {
@@ -565,6 +605,9 @@ body {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
+    /* Ensure overlay is always visible to prevent white flash */
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
 }
 
 .home-background-decorations {
@@ -699,6 +742,57 @@ body {
 @keyframes leafSwayRight {
     0%, 100% { transform: rotate(12deg) translateY(0); opacity: 0.7; }
     50%      { transform: rotate(6deg) translateY(3px); opacity: 0.9; }
+}
+
+/* Bunga Mawar Merah Maroon - Decorative roses under the photo circle (left/right) */
+.rose-decoration {
+    position: absolute;
+    bottom: -20px;
+    width: 60px;
+    height: 80px;
+    z-index: -1;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(128, 0, 32, 0.4));
+}
+
+.rose-left {
+    left: 30px;
+    transform: rotate(-15deg);
+    animation: roseSwayLeft 4s ease-in-out infinite;
+}
+
+.rose-right {
+    right: 30px;
+    transform: rotate(15deg);
+    animation: roseSwayRight 4s ease-in-out infinite;
+}
+
+.rose-decoration svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes roseSwayLeft {
+    0%, 100% { 
+        transform: rotate(-15deg) translateY(0); 
+        opacity: 0.9; 
+    }
+    50% { 
+        transform: rotate(-8deg) translateY(4px); 
+        opacity: 1; 
+    }
+}
+
+@keyframes roseSwayRight {
+    0%, 100% { 
+        transform: rotate(15deg) translateY(0); 
+        opacity: 0.9; 
+    }
+    50% { 
+        transform: rotate(8deg) translateY(4px); 
+        opacity: 1; 
+    }
 }
 
 @keyframes pulseCircle {
@@ -981,13 +1075,46 @@ body {
 
 /* Gallery Preview */
 .gallery-preview {
-    background: var(--light-bg);
+    background: #000; /* Always black to prevent white flash */
     padding: 0 !important;
     position: relative;
     overflow: hidden;
     min-height: 100vh !important;
     display: flex !important;
     align-items: stretch !important;
+    /* Prevent white flash during scroll */
+    z-index: 1;
+    /* Faster transition */
+    transition: opacity 0.2s ease-out;
+}
+
+/* Ensure gallery preview images have dark overlay to maintain black background during transition */
+.gallery-preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Darker overlay to maintain black feel during transition */
+    z-index: 1;
+    pointer-events: none;
+    /* Ensure overlay is always visible */
+    opacity: 1;
+}
+
+/* Smooth transition from home to gallery preview */
+.home-section + .gallery-preview {
+    margin-top: 0;
+    /* Ensure seamless background transition - always black */
+    background: #000;
+}
+
+/* Smooth transition from gallery preview to wedding prayer */
+.gallery-preview + .wedding-prayer-section {
+    margin-top: 0;
+    padding-top: 4rem;
+    /* Ensure seamless background transition */
+    background: #000;
 }
 
 .gallery-swiper {
@@ -1064,16 +1191,7 @@ body {
     filter: grayscale(80%) contrast(1.1) brightness(1);
 }
 
-.gallery-preview-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2;
-    overflow: hidden;
-}
+/* Removed duplicate - using the one above with darker overlay */
 
 .stripes-overlay {
     width: 100%;
@@ -1151,6 +1269,23 @@ body {
     overflow: hidden;
     padding: 4rem 0;
     text-align: center;
+    /* Smooth transition from home section */
+    z-index: 1;
+    /* Prevent white flash - ensure seamless transition */
+    margin-top: 0;
+    /* Smooth fade-in */
+    transition: opacity 0.3s ease-out;
+    /* Ensure background is always visible */
+    min-height: auto;
+}
+
+/* Smooth transition between home and wedding prayer sections */
+.home-section + .wedding-prayer-section {
+    /* No gap between sections */
+    margin-top: 0;
+    padding-top: 4rem;
+    /* Ensure seamless background transition */
+    background: #000;
 }
 
 .wedding-prayer-card {
@@ -1171,8 +1306,18 @@ body {
 .wedding-prayer-verse[data-aos],
 .wedding-prayer-heading[data-aos],
 .wedding-prayer-text[data-aos] {
-    opacity: 1;
+    opacity: 0.99 !important; /* Prevent white flash */
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); /* Faster transition */
     /* Hardware acceleration sudah di-handle oleh base [data-aos] styles */
+}
+
+.wedding-prayer-section[data-aos].aos-animate,
+.wedding-prayer-card[data-aos].aos-animate,
+.wedding-prayer-plant[data-aos].aos-animate,
+.wedding-prayer-verse[data-aos].aos-animate,
+.wedding-prayer-heading[data-aos].aos-animate,
+.wedding-prayer-text[data-aos].aos-animate {
+    opacity: 1 !important;
 }
 
 .wedding-prayer-plant {
@@ -1761,12 +1906,20 @@ body {
 .galeri-header[data-aos],
 .galeri-main-container[data-aos],
 .galeri-thumbnails[data-aos] {
-    opacity: 1;
+    opacity: 0.99 !important; /* Prevent white flash */
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.galeri-section[data-aos].aos-animate,
+.galeri-header[data-aos].aos-animate,
+.galeri-main-container[data-aos].aos-animate,
+.galeri-thumbnails[data-aos].aos-animate {
+    opacity: 1 !important;
 }
 
 .galeri-section::before {
@@ -1966,12 +2119,21 @@ body {
 .map-container[data-aos],
 .map-btn[data-aos],
 .map-hint[data-aos] {
-    opacity: 1;
+    opacity: 0.99 !important; /* Prevent white flash */
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lokasi-section[data-aos].aos-animate,
+.lokasi-banner[data-aos].aos-animate,
+.map-container[data-aos].aos-animate,
+.map-btn[data-aos].aos-animate,
+.map-hint[data-aos].aos-animate {
+    opacity: 1 !important;
 }
 
 .lokasi-section::before {
@@ -2188,6 +2350,24 @@ body {
 }
 
 /* Ensure AOS animations work properly for Envelope Section with hardware acceleration */
+/* Override base [data-aos] opacity untuk envelope section agar animasi terlihat */
+.envelope-section[data-aos]:not(.aos-animate),
+.envelope-section .section-title[data-aos]:not(.aos-animate),
+.envelope-text[data-aos]:not(.aos-animate),
+.envelope-btn[data-aos]:not(.aos-animate),
+.envelope-details[data-aos]:not(.aos-animate),
+.envelope-section-transfer[data-aos]:not(.aos-animate),
+.envelope-section-gift[data-aos]:not(.aos-animate) {
+    /* Let AOS handle initial opacity - remove override */
+    opacity: 0 !important;
+    transform: translateY(30px) translateZ(0);
+    -webkit-transform: translateY(30px) translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .envelope-section[data-aos],
 .envelope-section .section-title[data-aos],
 .envelope-text[data-aos],
@@ -2195,12 +2375,19 @@ body {
 .envelope-details[data-aos],
 .envelope-section-transfer[data-aos],
 .envelope-section-gift[data-aos] {
-    opacity: 1;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+}
+
+.envelope-section[data-aos].aos-animate,
+.envelope-section .section-title[data-aos].aos-animate,
+.envelope-text[data-aos].aos-animate,
+.envelope-btn[data-aos].aos-animate,
+.envelope-details[data-aos].aos-animate,
+.envelope-section-transfer[data-aos].aos-animate,
+.envelope-section-gift[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: translateY(0) translateZ(0) !important;
 }
 
 .envelope-section::before {
@@ -2409,6 +2596,89 @@ body {
     color: var(--text-color);
 }
 
+/* Dress Code Section */
+.dresscode-section {
+    background: url('/images/bg-dresscode.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dresscode-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.dresscode-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.dresscode-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #800020; /* Merah maroon */
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(128, 0, 32, 0.6), 0 0 20px rgba(128, 0, 32, 0.4);
+    letter-spacing: 2px;
+}
+
+.dresscode-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    color: #A00030; /* Merah maroon lebih terang */
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(128, 0, 32, 0.6), 0 0 15px rgba(128, 0, 32, 0.3);
+    font-weight: 400;
+}
+
+/* Ensure AOS animations work properly for Dress Code Section */
+/* Override base [data-aos] opacity untuk dresscode section agar animasi terlihat */
+.dresscode-section[data-aos]:not(.aos-animate),
+.dresscode-title[data-aos]:not(.aos-animate),
+.dresscode-subtitle[data-aos]:not(.aos-animate) {
+    /* Let AOS handle initial opacity - remove override */
+    opacity: 0 !important;
+    transform: translateY(30px) translateZ(0);
+    -webkit-transform: translateY(30px) translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dresscode-section[data-aos],
+.dresscode-title[data-aos],
+.dresscode-subtitle[data-aos] {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.dresscode-section[data-aos].aos-animate,
+.dresscode-title[data-aos].aos-animate,
+.dresscode-subtitle[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: translateY(0) translateZ(0) !important;
+}
+
 /* RSVP Section */
 .rsvp-section {
     background: url('/images/bg-location.jpg');
@@ -2422,16 +2692,35 @@ body {
 }
 
 /* Ensure AOS animations work properly for RSVP Section with hardware acceleration */
+/* Override base [data-aos] opacity untuk rsvp section agar animasi terlihat */
+.rsvp-section[data-aos]:not(.aos-animate),
+.rsvp-section .section-title[data-aos]:not(.aos-animate),
+.rsvp-text[data-aos]:not(.aos-animate),
+.rsvp-form[data-aos]:not(.aos-animate) {
+    /* Let AOS handle initial opacity - remove override */
+    opacity: 0 !important;
+    transform: translateY(30px) translateZ(0);
+    -webkit-transform: translateY(30px) translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .rsvp-section[data-aos],
 .rsvp-section .section-title[data-aos],
 .rsvp-text[data-aos],
 .rsvp-form[data-aos] {
-    opacity: 1;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+}
+
+.rsvp-section[data-aos].aos-animate,
+.rsvp-section .section-title[data-aos].aos-animate,
+.rsvp-text[data-aos].aos-animate,
+.rsvp-form[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: translateY(0) translateZ(0) !important;
 }
 
 .rsvp-section::before {
@@ -2645,17 +2934,38 @@ body {
 }
 
 /* Ensure AOS animations work properly for Ucapan Section with hardware acceleration */
+/* Override base [data-aos] opacity untuk ucapan section agar animasi terlihat */
+.ucapan-section[data-aos]:not(.aos-animate),
+.ucapan-section .section-title[data-aos]:not(.aos-animate),
+.ucapan-text[data-aos]:not(.aos-animate),
+.ucapan-form[data-aos]:not(.aos-animate),
+.ucapan-list[data-aos]:not(.aos-animate) {
+    /* Let AOS handle initial opacity - remove override */
+    opacity: 0 !important;
+    transform: translateY(30px) translateZ(0);
+    -webkit-transform: translateY(30px) translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .ucapan-section[data-aos],
 .ucapan-section .section-title[data-aos],
 .ucapan-text[data-aos],
 .ucapan-form[data-aos],
 .ucapan-list[data-aos] {
-    opacity: 1;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+}
+
+.ucapan-section[data-aos].aos-animate,
+.ucapan-section .section-title[data-aos].aos-animate,
+.ucapan-text[data-aos].aos-animate,
+.ucapan-form[data-aos].aos-animate,
+.ucapan-list[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: translateY(0) translateZ(0) !important;
 }
 
 .ucapan-section::before {
@@ -3120,23 +3430,81 @@ body {
 
 /* Quote Section */
 .quote-section {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    background: url('/images/bg-halaman-terakhir.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+.quote-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 /* Ensure AOS animations work properly for Quote Section with hardware acceleration */
+/* Override base [data-aos] opacity untuk quote section agar animasi terlihat */
+.quote-section[data-aos]:not(.aos-animate),
+.quote-text[data-aos]:not(.aos-animate),
+.quote-note[data-aos]:not(.aos-animate),
+.quote-photo-container[data-aos]:not(.aos-animate),
+.quote-rose-decoration[data-aos]:not(.aos-animate),
+.quote-signature[data-aos]:not(.aos-animate) {
+    /* Let AOS handle initial opacity - remove override */
+    opacity: 0 !important;
+    transform: translateY(30px) translateZ(0);
+    -webkit-transform: translateY(30px) translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Special handling for zoom-in animation on photo container */
+.quote-photo-container[data-aos]:not(.aos-animate) {
+    opacity: 0 !important;
+    transform: scale(0.8) translateZ(0);
+    -webkit-transform: scale(0.8) translateZ(0);
+}
+
 .quote-section[data-aos],
 .quote-text[data-aos],
 .quote-note[data-aos],
 .quote-photo-container[data-aos],
-.quote-feather-decoration[data-aos],
+.quote-rose-decoration[data-aos],
 .quote-signature[data-aos] {
-    opacity: 1;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+}
+
+.quote-section[data-aos].aos-animate,
+.quote-text[data-aos].aos-animate,
+.quote-note[data-aos].aos-animate,
+.quote-photo-container[data-aos].aos-animate,
+.quote-rose-decoration[data-aos].aos-animate,
+.quote-signature[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: translateY(0) translateZ(0) !important;
+}
+
+/* Special handling for zoom-in animation on photo container */
+.quote-photo-container[data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: scale(1) translateZ(0) !important;
 }
 
 .quote-text {
@@ -3173,8 +3541,8 @@ body {
     height: 180px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #c0c0c0;
-    box-shadow: 0 10px 40px rgba(192, 192, 192, 0.3);
+    border: none; /* Hilangkan border */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); /* Shadow hitam */
     position: relative;
     z-index: 2;
     -webkit-transform: translateZ(0);
@@ -3187,11 +3555,11 @@ body {
 @keyframes pulseQuoteCircle {
     0%, 100% {
         transform: translateZ(0) scale(1);
-        box-shadow: 0 10px 40px rgba(192, 192, 192, 0.3);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
     50% {
         transform: translateZ(0) scale(1.05);
-        box-shadow: 0 15px 50px rgba(192, 192, 192, 0.5);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
     }
 }
 
@@ -3199,7 +3567,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center 40%; /* Pindahkan foto lebih ke bawah di dalam circle (80% dari atas) */
     filter: grayscale(100%) contrast(1.05) brightness(1.02);
     image-rendering: auto;
     -webkit-backface-visibility: hidden;
@@ -3208,39 +3576,61 @@ body {
     opacity: 1;
 }
 
-.quote-feather-decoration {
+.quote-rose-decoration {
     position: relative;
     width: 200px;
-    height: 60px;
-    margin-top: -15px;
+    height: 80px;
+    margin-top: -10px;
     z-index: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    gap: 10px;
+    align-items: center;
+    gap: 40px;
 }
 
-.quote-feather-decoration .feather-left,
-.quote-feather-decoration .feather-right {
-    width: 80px;
-    height: 50px;
-    background: linear-gradient(
-        135deg,
-        rgba(192, 192, 192, 0.2) 0%,
-        rgba(192, 192, 192, 0.4) 50%,
-        rgba(192, 192, 192, 0.2) 100%
-    );
-    clip-path: path('M 20 0 Q 40 10 40 25 Q 40 40 30 50 Q 20 45 10 50 Q 0 40 0 25 Q 0 10 20 0 Z');
-    filter: drop-shadow(0 2px 4px rgba(192, 192, 192, 0.3));
-    transform-origin: bottom center;
+.quote-rose {
+    position: relative;
+    width: 50px;
+    height: 70px;
+    filter: drop-shadow(0 3px 6px rgba(128, 0, 32, 0.4));
 }
 
-.quote-feather-decoration .feather-left {
-    transform: rotate(-15deg);
+.quote-rose svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-.quote-feather-decoration .feather-right {
-    transform: rotate(15deg) scaleX(-1);
+.quote-rose-left {
+    transform: rotate(-10deg);
+    animation: quoteRoseSwayLeft 4s ease-in-out infinite;
+}
+
+.quote-rose-right {
+    transform: rotate(10deg);
+    animation: quoteRoseSwayRight 4s ease-in-out infinite;
+}
+
+@keyframes quoteRoseSwayLeft {
+    0%, 100% { 
+        transform: rotate(-10deg) translateY(0); 
+        opacity: 0.9; 
+    }
+    50% { 
+        transform: rotate(-5deg) translateY(3px); 
+        opacity: 1; 
+    }
+}
+
+@keyframes quoteRoseSwayRight {
+    0%, 100% { 
+        transform: rotate(10deg) translateY(0); 
+        opacity: 0.9; 
+    }
+    50% { 
+        transform: rotate(5deg) translateY(3px); 
+        opacity: 1; 
+    }
 }
 
 .quote-signature {
@@ -3256,11 +3646,13 @@ body {
     background: #000;
     color: #c0c0c0;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem 2rem; /* Kurangi padding vertikal */
 }
 
 .footer p {
-    margin: 0.5rem 0;
+    margin: 0;
+    font-size: 0.85rem; /* Perkecil font size */
+    line-height: 1.4;
 }
 
 /* Notification */
@@ -3715,6 +4107,29 @@ body {
     .leaf-decoration {
         width: 200px;
         height: 300px;
+    }
+
+    .rose-decoration {
+        width: 50px;
+        height: 70px;
+        bottom: -15px;
+    }
+
+    .rose-left {
+        left: 25px;
+    }
+
+    .rose-right {
+        right: 25px;
+    }
+
+    .dresscode-title {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .dresscode-subtitle {
+        font-size: 1.2rem;
     }
 
     /* Posisikan tepat di atas icon Ucapan (paling kanan) di bottom navbar */

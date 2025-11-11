@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="id">
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        {/* Viewport meta tag harus di _app.js atau di Head component di pages, bukan di _document.js */}
         <link
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Dancing+Script:wght@400;500;600;700&display=swap"
           rel="stylesheet"

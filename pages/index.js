@@ -141,23 +141,25 @@ export default function Home() {
         // Dynamic import untuk lazy load AOS
         import('aos').then((AOS) => {
           AOS.default.init({
-            duration: 600, // Reduced dari 800 untuk lebih smooth
-            easing: 'ease-out-cubic', // Better easing untuk smooth animation
+            duration: 400, // Lebih cepat untuk lebih smooth
+            easing: 'ease-out-quart', // Easing yang lebih smooth
             once: true,
-            offset: 120, // Slightly increased untuk better trigger point
+            offset: 100, // Trigger lebih awal untuk smoother transition
             // Optimasi performa untuk smooth animation
             disableMutationObserver: false,
-            debounceDelay: 10, // Reduced untuk lebih responsive
-            throttleDelay: 50, // Reduced untuk lebih smooth
+            debounceDelay: 50, // Lebih stabil
+            throttleDelay: 99, // Lebih smooth
             // Use hardware acceleration
             useClassNames: false,
+            // Prevent white flash
+            startEvent: 'DOMContentLoaded',
           });
           AOS.default.refresh();
           
           // Refresh AOS again after a short delay to ensure all sections are detected
           setTimeout(() => {
             AOS.default.refresh();
-          }, 200); // Reduced delay
+          }, 100);
         }).catch((err) => {
           console.error('Error loading AOS:', err);
         });
@@ -688,13 +690,13 @@ export default function Home() {
 
   return (
     <>
-      <Head suppressHydrationWarning>
+      <Head>
         <title>Undangan Pernikahan - Surya & Isna</title>
         <meta name="description" content="Undangan Pernikahan Surya & Isna" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        {/* Viewport sudah di _app.js, tidak perlu duplikasi */}
         {/* Preload only critical images */}
-        <link rel="preload" as="image" href="/images/halaman-pertama.jpg" fetchPriority="high" />
-        <link rel="preload" as="image" href="/images/gambar-home-new.jpg" fetchPriority="high" />
+        <link rel="preload" as="image" href="/images/halaman-pertama.jpg" fetchpriority="high" />
+        <link rel="preload" as="image" href="/images/gambar-home-new.jpg" fetchpriority="high" />
         {/* DNS prefetch untuk optimasi */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
@@ -720,8 +722,7 @@ export default function Home() {
         }}
         onEnded={() => setIsMusicPlaying(false)}
       >
-        <source src="/audio/wedding-music.mp3" type="audio/mpeg" />
-        <source src="/audio/wedding-music.ogg" type="audio/ogg" />
+        <source src="/audio/mr.kitty - after dark.mp3" type="audio/mpeg" />
         Browser Anda tidak mendukung audio.
       </audio>
 
@@ -853,6 +854,46 @@ export default function Home() {
             <div className="container">
               <h2 className="home-section-title">The Wedding</h2>
               <div className="couple-photo-container">
+                {/* Bunga Mawar Merah Maroon - Kiri */}
+                <div className="rose-decoration rose-left">
+                  <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                    {/* Kelopak luar */}
+                    <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                    <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                    <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
+                    {/* Kelopak tengah */}
+                    <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                    <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                    {/* Kelopak dalam */}
+                    <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
+                    <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
+                    {/* Daun */}
+                    <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
+                    <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
+                    {/* Batang */}
+                    <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
+                  </svg>
+                </div>
+                {/* Bunga Mawar Merah Maroon - Kanan */}
+                <div className="rose-decoration rose-right">
+                  <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                    {/* Kelopak luar */}
+                    <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                    <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                    <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
+                    {/* Kelopak tengah */}
+                    <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                    <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                    {/* Kelopak dalam */}
+                    <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
+                    <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
+                    {/* Daun */}
+                    <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
+                    <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
+                    {/* Batang */}
+                    <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
+                  </svg>
+                </div>
                 <div className="couple-photo-circle">
                   <img 
                     src="/images/gambar-home-new.jpg" 
@@ -916,7 +957,7 @@ export default function Home() {
           </section>
 
           {/* Gallery Preview */}
-          <section id="galeri-preview" className="section gallery-preview" data-aos="fade-up">
+          <section id="galeri-preview" className="section gallery-preview" data-aos="fade-up" data-aos-duration="250" data-aos-offset="50">
             <Swiper
               modules={[Navigation, Pagination, Autoplay, EffectFade]}
               spaceBetween={0}
@@ -963,11 +1004,11 @@ export default function Home() {
           </section>
 
           {/* Wedding Prayer Section */}
-          <section id="wedding-prayer" className="section wedding-prayer-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+          <section id="wedding-prayer" className="section wedding-prayer-section" data-aos="fade-up" data-aos-offset="50" data-aos-duration="250">
             <div className="container">
-              <div className="wedding-prayer-card" data-aos="fade-up" data-aos-duration="800">
+              <div className="wedding-prayer-card" data-aos="fade-up" data-aos-duration="250">
                 {/* Decorative Wedding Bouquet - Minimalist Elegant */}
-                <div className="wedding-prayer-plant" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">
+                <div className="wedding-prayer-plant" data-aos="fade-down" data-aos-delay="50" data-aos-duration="200">
                   <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" className="plant-svg">
                     {/* Top circular arrangement - 6 blurred spheres */}
                     <circle cx="100" cy="25" r="8" fill="#c0c0c0" opacity="0.6" filter="url(#blur)"/>
@@ -1021,7 +1062,7 @@ export default function Home() {
                 </div>
                 
                 {/* Quran Verse */}
-                <div className="wedding-prayer-verse" data-aos="fade-up" data-aos-delay="100">
+                <div className="wedding-prayer-verse" data-aos="fade-up" data-aos-delay="50">
                   <p className="quran-verse-text">
                     Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.
                   </p>
@@ -1030,12 +1071,12 @@ export default function Home() {
               </div>
               
               {/* The Wedding Of Heading */}
-              <div className="wedding-prayer-heading" data-aos="fade-up" data-aos-delay="200">
+              <div className="wedding-prayer-heading" data-aos="fade-up" data-aos-delay="100">
                 <h2 className="wedding-of-title">The Wedding Of</h2>
               </div>
               
               {/* Prayer Text */}
-              <div className="wedding-prayer-text" data-aos="fade-up" data-aos-delay="300">
+              <div className="wedding-prayer-text" data-aos="fade-up" data-aos-delay="150">
                 <p className="prayer-text">
                   Ya Allah, dengan segala kesucian hati, kami bersujud memohon Ridho-Mu, untuk menuju Sunnah Rasul-Mu, membentuk keluarga yang sakinah, mawaddah, warohmah
                 </p>
@@ -1301,16 +1342,16 @@ export default function Home() {
           </section>
 
           {/* Digital Envelope Section */}
-          <section className="section envelope-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+          <section className="section envelope-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
             <div className="container">
-              <h2 className="section-title" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">Amplop Digital</h2>
-              <p className="envelope-text" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Doa Restu Anda merupakan karunia bagi kami.</p>
-              <button className="envelope-btn" onClick={() => setShowEnvelope(!showEnvelope)} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+              <h2 className="section-title" data-aos="fade-down" data-aos-delay="50" data-aos-duration="300">Amplop Digital</h2>
+              <p className="envelope-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="300">Doa Restu Anda merupakan karunia bagi kami.</p>
+              <button className="envelope-btn" onClick={() => setShowEnvelope(!showEnvelope)} data-aos="fade-up" data-aos-delay="150" data-aos-duration="300">
                 Tampilkan Amplop Digital
               </button>
               {showEnvelope && (
-                <div className="envelope-details" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
-                  <div className="envelope-section-transfer" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">
+                <div className="envelope-details" data-aos="fade-up" data-aos-delay="50" data-aos-duration="300">
+                  <div className="envelope-section-transfer" data-aos="fade-up" data-aos-delay="100" data-aos-duration="300">
                     <p className="envelope-info">Silahkan bisa transfer melalui rekening berikut:</p>
                     <div className="bank-info">
                       <div className="bank-logo">
@@ -1336,7 +1377,7 @@ export default function Home() {
                     <p className="envelope-note">Silakan konfirmasi transfer dengan isi form dibawah.</p>
                   </div>
                   
-                  <div className="envelope-section-gift" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+                  <div className="envelope-section-gift" data-aos="fade-up" data-aos-delay="150" data-aos-duration="300">
                     <h3 className="gift-section-title">Hadiah / Kado</h3>
                     <p className="gift-info">Silakan bisa mengirimkan hadiah ke alamat berikut:</p>
                     <div className="gift-address">
@@ -1355,12 +1396,20 @@ export default function Home() {
             </div>
           </section>
 
-          {/* RSVP Section */}
-          <section className="section rsvp-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+          {/* Dress Code Section */}
+          <section id="dresscode" className="section dresscode-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
             <div className="container">
-              <h2 className="section-title" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">RSVP</h2>
-              <p className="rsvp-text" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Silakan konfirmasi kehadiran anda kepada kedua mempelai.</p>
-              <form className="rsvp-form" onSubmit={handleRSVP} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+              <h2 className="dresscode-title" data-aos="fade-down" data-aos-delay="50" data-aos-duration="300">Dress code</h2>
+              <p className="dresscode-subtitle" data-aos="fade-up" data-aos-delay="100" data-aos-duration="300">Gothic (hitam/maroon)</p>
+            </div>
+          </section>
+
+          {/* RSVP Section */}
+          <section className="section rsvp-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
+            <div className="container">
+              <h2 className="section-title" data-aos="fade-down" data-aos-delay="50" data-aos-duration="300">RSVP</h2>
+              <p className="rsvp-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="300">Silakan konfirmasi kehadiran anda kepada kedua mempelai.</p>
+              <form className="rsvp-form" onSubmit={handleRSVP} data-aos="fade-up" data-aos-delay="150" data-aos-duration="300">
                 <div className="form-group">
                   <input type="text" name="name" placeholder="Nama" required />
                 </div>
@@ -1382,11 +1431,11 @@ export default function Home() {
           </section>
 
           {/* Ucapan Section */}
-          <section id="ucapan" className="section ucapan-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+          <section id="ucapan" className="section ucapan-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
             <div className="container">
-              <h2 className="section-title" data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">Ucapan Selamat</h2>
-              <p className="ucapan-text" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Silakan memberikan ucapan selamat kepada kedua mempelai.</p>
-              <form className="ucapan-form" onSubmit={handleUcapan} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+              <h2 className="section-title" data-aos="fade-down" data-aos-delay="50" data-aos-duration="300">Ucapan Selamat</h2>
+              <p className="ucapan-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="300">Silakan memberikan ucapan selamat kepada kedua mempelai.</p>
+              <form className="ucapan-form" onSubmit={handleUcapan} data-aos="fade-up" data-aos-delay="150" data-aos-duration="300">
                 <div className="form-group">
                   <input type="text" name="name" placeholder="Nama" required />
                 </div>
@@ -1417,8 +1466,8 @@ export default function Home() {
                 onMouseEnter={() => setIsUcapanPaused(true)}
                 onMouseLeave={() => setIsUcapanPaused(false)}
                 data-aos="fade-up"
-                data-aos-delay="300"
-                data-aos-duration="600"
+                data-aos-delay="200"
+                data-aos-duration="300"
               >
                 {/* Pagination indicator */}
                 {ucapanList.length > ucapanDisplayCount && (
@@ -1486,14 +1535,14 @@ export default function Home() {
           </section>
 
           {/* Quote Section */}
-          <section className="section quote-section" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+          <section className="section quote-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
             <div className="container">
-              <p className="quote-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+              <p className="quote-text" data-aos="fade-up" data-aos-delay="50" data-aos-duration="300">
                 "Kita adalah "ketersalingan". Saling mengisi kekosongan, saling melengkapi, saling membersamai, dan
                 saling berdamai dengan segala kelebihan dan kekurangan yang kita miliki"
               </p>
-              <p className="quote-note" data-aos="fade-up" data-aos-delay="150" data-aos-duration="600">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
-              <div className="quote-photo-container" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="600">
+              <p className="quote-note" data-aos="fade-up" data-aos-delay="100" data-aos-duration="300">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
+              <div className="quote-photo-container" data-aos="zoom-in" data-aos-delay="150" data-aos-duration="300">
                 <div className="quote-photo-circle">
                   <img 
                     src="/images/gambar-home-new.jpg" 
@@ -1513,20 +1562,54 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div className="quote-feather-decoration" data-aos="fade-up" data-aos-delay="250" data-aos-duration="600">
-                  <div className="feather-left"></div>
-                  <div className="feather-right"></div>
+                {/* Bunga Mawar Merah Maroon - Quote Section */}
+                <div className="quote-rose-decoration" data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
+                  {/* Bunga Mawar Kiri */}
+                  <div className="quote-rose quote-rose-left">
+                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                      {/* Kelopak luar */}
+                      <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                      <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                      <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
+                      {/* Kelopak tengah */}
+                      <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                      <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                      {/* Kelopak dalam */}
+                      <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
+                      <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
+                      {/* Daun */}
+                      <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
+                      <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
+                      {/* Batang */}
+                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
+                    </svg>
+                  </div>
+                  {/* Bunga Mawar Kanan */}
+                  <div className="quote-rose quote-rose-right">
+                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                      {/* Kelopak luar */}
+                      <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                      <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
+                      <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
+                      {/* Kelopak tengah */}
+                      <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                      <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
+                      {/* Kelopak dalam */}
+                      <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
+                      <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
+                      {/* Daun */}
+                      <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
+                      <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
+                      {/* Batang */}
+                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
-              <h3 className="quote-signature" data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">Surya & Isna</h3>
+              <h3 className="quote-signature" data-aos="fade-up" data-aos-delay="250" data-aos-duration="300">Surya & Isna</h3>
             </div>
           </section>
 
-          {/* Footer */}
-          <footer className="footer">
-            {/* <p>Designed with ❤ by zlfkri.</p> */}
-            <p>Developed by zlfkri © 2025</p>
-          </footer>
         </div>
       )}
     </>
