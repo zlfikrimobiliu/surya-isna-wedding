@@ -851,49 +851,49 @@ export default function Home() {
               <div className="leaf-decoration leaf-top-right"></div>
               <div className="leaf-decoration leaf-bottom-left"></div>
             </div>
+            {/* Mawar Pojok Kiri Atas */}
+            <div className="home-rose-top-left">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="home-rose-image"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Atas */}
+            <div className="home-rose-top-right">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="home-rose-image"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kiri Bawah */}
+            <div className="home-rose-bottom-left">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="home-rose-image"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Bawah */}
+            <div className="home-rose-bottom-right">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="home-rose-image"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
             <div className="container">
               <h2 className="home-section-title">The Wedding</h2>
               <div className="couple-photo-container">
-                {/* Bunga Mawar Merah Maroon - Kiri */}
-                <div className="rose-decoration rose-left">
-                  <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                    {/* Kelopak luar */}
-                    <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                    <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                    <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
-                    {/* Kelopak tengah */}
-                    <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                    <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                    {/* Kelopak dalam */}
-                    <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
-                    <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
-                    {/* Daun */}
-                    <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
-                    <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
-                    {/* Batang */}
-                    <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
-                  </svg>
-                </div>
-                {/* Bunga Mawar Merah Maroon - Kanan */}
-                <div className="rose-decoration rose-right">
-                  <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                    {/* Kelopak luar */}
-                    <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                    <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                    <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
-                    {/* Kelopak tengah */}
-                    <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                    <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                    {/* Kelopak dalam */}
-                    <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
-                    <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
-                    {/* Daun */}
-                    <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
-                    <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
-                    {/* Batang */}
-                    <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
-                  </svg>
-                </div>
                 <div className="couple-photo-circle">
                   <img 
                     src="/images/gambar-home-new.jpg" 
@@ -1005,6 +1005,46 @@ export default function Home() {
 
           {/* Wedding Prayer Section */}
           <section id="wedding-prayer" className="section wedding-prayer-section" data-aos="fade-up" data-aos-offset="50" data-aos-duration="250">
+            {/* Mawar Pojok Kiri Atas */}
+            <div className="prayer-rose-top-left">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="prayer-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Atas */}
+            <div className="prayer-rose-top-right">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="prayer-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kiri Bawah */}
+            <div className="prayer-rose-bottom-left">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="prayer-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Bawah */}
+            <div className="prayer-rose-bottom-right">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="prayer-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <div className="container">
               <div className="wedding-prayer-card" data-aos="fade-up" data-aos-duration="250">
                 {/* Decorative Wedding Bouquet - Minimalist Elegant */}
@@ -1086,6 +1126,46 @@ export default function Home() {
 
           {/* Mempelai Section */}
           <section id="mempelai" className="section mempelai-section" data-aos="fade-up">
+            {/* Mawar Pojok Kiri Atas */}
+            <div className="mempelai-rose-top-left">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="mempelai-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Atas */}
+            <div className="mempelai-rose-top-right">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="mempelai-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kiri Bawah */}
+            <div className="mempelai-rose-bottom-left">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="mempelai-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Bawah */}
+            <div className="mempelai-rose-bottom-right">
+              <img 
+                src="/images/mawar4.png" 
+                alt="Rose Decoration" 
+                className="mempelai-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <div className="container">
               <h2 className="mempelai-section-title" data-aos="fade-down">Mempelai</h2>
               <p className="mempelai-subtitle" data-aos="fade-down" data-aos-delay="100">Pria & Wanita</p>
@@ -1162,12 +1242,11 @@ export default function Home() {
                     <h3 className="event-title">AKAD NIKAH</h3>
                     <div className="event-date">
                       <p className="day">Minggu</p>
-                      <p className="date-number">14</p>
-                      <p className="month-year">Desember 2025</p>
+                      <p className="date-number month-year">14 DESEMBER 2025</p>
                     </div>
                     <div className="event-time">
                       <i className="fas fa-clock"></i>
-                      <span>10.00 WIB - Selesai</span>
+                      <span>08.00 WIB - Selesai</span>
                     </div>
                     <div className="event-location">
                       <i className="fas fa-map-marker-alt"></i>
@@ -1186,8 +1265,7 @@ export default function Home() {
                     <h3 className="event-title">RESEPSI PERNIKAHAN</h3>
                     <div className="event-date">
                       <p className="day">Minggu</p>
-                      <p className="date-number">14</p>
-                      <p className="month-year">Desember 2025</p>
+                      <p className="date-number month-year">14 DESEMBER 2025</p>
                     </div>
                     <div className="event-time">
                       <i className="fas fa-clock"></i>
@@ -1581,7 +1659,7 @@ export default function Home() {
                       <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
                       <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
                       {/* Batang */}
-                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
+                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" strokeWidth="3" opacity="0.7" />
                     </svg>
                   </div>
                   {/* Bunga Mawar Kanan */}
@@ -1601,7 +1679,7 @@ export default function Home() {
                       <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
                       <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
                       {/* Batang */}
-                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" stroke-width="3" opacity="0.7" />
+                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" strokeWidth="3" opacity="0.7" />
                     </svg>
                   </div>
                 </div>
