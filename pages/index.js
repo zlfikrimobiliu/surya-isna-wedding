@@ -854,7 +854,7 @@ export default function Home() {
             {/* Mawar Pojok Kiri Atas */}
             <div className="home-rose-top-left">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="home-rose-image"
                 loading="eager"
@@ -864,7 +864,7 @@ export default function Home() {
             {/* Mawar Pojok Kanan Atas */}
             <div className="home-rose-top-right">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="home-rose-image"
                 loading="eager"
@@ -874,7 +874,7 @@ export default function Home() {
             {/* Mawar Pojok Kiri Bawah */}
             <div className="home-rose-bottom-left">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="home-rose-image"
                 loading="eager"
@@ -884,7 +884,7 @@ export default function Home() {
             {/* Mawar Pojok Kanan Bawah */}
             <div className="home-rose-bottom-right">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="home-rose-image"
                 loading="eager"
@@ -1008,7 +1008,7 @@ export default function Home() {
             {/* Mawar Pojok Kiri Atas */}
             <div className="prayer-rose-top-left">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="prayer-rose-image"
                 loading="lazy"
@@ -1018,7 +1018,7 @@ export default function Home() {
             {/* Mawar Pojok Kanan Atas */}
             <div className="prayer-rose-top-right">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="prayer-rose-image"
                 loading="lazy"
@@ -1028,7 +1028,7 @@ export default function Home() {
             {/* Mawar Pojok Kiri Bawah */}
             <div className="prayer-rose-bottom-left">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="prayer-rose-image"
                 loading="lazy"
@@ -1038,7 +1038,7 @@ export default function Home() {
             {/* Mawar Pojok Kanan Bawah */}
             <div className="prayer-rose-bottom-right">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="prayer-rose-image"
                 loading="lazy"
@@ -1129,7 +1129,7 @@ export default function Home() {
             {/* Mawar Pojok Kiri Atas */}
             <div className="mempelai-rose-top-left">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="mempelai-rose-image"
                 loading="lazy"
@@ -1139,7 +1139,7 @@ export default function Home() {
             {/* Mawar Pojok Kanan Atas */}
             <div className="mempelai-rose-top-right">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="mempelai-rose-image"
                 loading="lazy"
@@ -1149,7 +1149,7 @@ export default function Home() {
             {/* Mawar Pojok Kiri Bawah */}
             <div className="mempelai-rose-bottom-left">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="mempelai-rose-image"
                 loading="lazy"
@@ -1159,7 +1159,7 @@ export default function Home() {
             {/* Mawar Pojok Kanan Bawah */}
             <div className="mempelai-rose-bottom-right">
               <img 
-                src="/images/mawar4.png" 
+                src="/images/mawar5.png" 
                 alt="Rose Decoration" 
                 className="mempelai-rose-image"
                 loading="lazy"
@@ -1614,6 +1614,46 @@ export default function Home() {
 
           {/* Quote Section */}
           <section className="section quote-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
+            {/* Mawar Pojok Kiri Atas */}
+            <div className="quote-rose-top-left">
+              <img 
+                src="/images/mawar5.png" 
+                alt="Rose Decoration" 
+                className="quote-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Atas */}
+            <div className="quote-rose-top-right">
+              <img 
+                src="/images/mawar5.png" 
+                alt="Rose Decoration" 
+                className="quote-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kiri Bawah */}
+            <div className="quote-rose-bottom-left">
+              <img 
+                src="/images/mawar5.png" 
+                alt="Rose Decoration" 
+                className="quote-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Mawar Pojok Kanan Bawah */}
+            <div className="quote-rose-bottom-right">
+              <img 
+                src="/images/mawar5.png" 
+                alt="Rose Decoration" 
+                className="quote-rose-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <div className="container">
               <p className="quote-text" data-aos="fade-up" data-aos-delay="50" data-aos-duration="300">
                 "Kita adalah "ketersalingan". Saling mengisi kekosongan, saling melengkapi, saling membersamai, dan

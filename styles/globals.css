@@ -664,10 +664,10 @@ body {
 .home-section .home-rose-top-left {
     position: absolute;
     top: 10px;
-    left: -20px;
+    left: -35px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -681,10 +681,10 @@ body {
 .home-section .home-rose-top-right {
     position: absolute;
     top: 10px;
-    right: -20px;
+    right: -35px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -698,10 +698,10 @@ body {
 .home-section .home-rose-bottom-left {
     position: absolute;
     bottom: 120px;
-    left: -20px;
+    left: -35px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -715,10 +715,10 @@ body {
 .home-section .home-rose-bottom-right {
     position: absolute;
     bottom: 120px;
-    right: -20px;
+    right: -35px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -806,8 +806,8 @@ body {
     .home-rose-top-right,
     .home-rose-bottom-left,
     .home-rose-bottom-right {
-        width: 60px;
-        height: 60px;
+        width: 90px;
+        height: 110px;
     }
     .home-rose-top-left,
     .home-rose-top-right {
@@ -817,13 +817,16 @@ body {
     .home-rose-bottom-right {
         bottom: 90px;
     }
-    .home-rose-top-left,
+    .home-rose-top-left {
+        left: -30px;
+    }
+    
     .home-rose-bottom-left {
-        left: -15px;
+        left: -30px;
     }
     .home-rose-top-right,
     .home-rose-bottom-right {
-        right: -15px;
+        right: -30px;
     }
 }
 
@@ -832,8 +835,8 @@ body {
     .home-rose-top-right,
     .home-rose-bottom-left,
     .home-rose-bottom-right {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
     }
     .home-rose-top-left,
     .home-rose-top-right {
@@ -843,13 +846,16 @@ body {
     .home-rose-bottom-right {
         bottom: 80px;
     }
-    .home-rose-top-left,
+    .home-rose-top-left {
+        left: -25px;
+    }
+    
     .home-rose-bottom-left {
-        left: -10px;
+        left: -25px;
     }
     .home-rose-top-right,
     .home-rose-bottom-right {
-        right: -10px;
+        right: -25px;
     }
     
     /* Mawar Mempelai Section - Mobile */
@@ -857,8 +863,37 @@ body {
     .mempelai-section .mempelai-rose-top-right,
     .mempelai-section .mempelai-rose-bottom-left,
     .mempelai-section .mempelai-rose-bottom-right {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
+    }
+    
+    /* Mawar Quote Section - Mobile */
+    .quote-section .quote-rose-top-left,
+    .quote-section .quote-rose-top-right,
+    .quote-section .quote-rose-bottom-left,
+    .quote-section .quote-rose-bottom-right {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .quote-section .quote-rose-top-left,
+    .quote-section .quote-rose-top-right {
+        top: 3px;
+    }
+    
+    .quote-section .quote-rose-bottom-left,
+    .quote-section .quote-rose-bottom-right {
+        bottom: 80px;
+    }
+    
+    .quote-section .quote-rose-top-left,
+    .quote-section .quote-rose-bottom-left {
+        left: -25px;
+    }
+    
+    .quote-section .quote-rose-top-right,
+    .quote-section .quote-rose-bottom-right {
+        right: -25px;
     }
     
     .mempelai-section .mempelai-rose-top-left,
@@ -1489,7 +1524,7 @@ body {
     background: #000;
     position: relative;
     overflow: visible;
-    padding: 4rem 0;
+    padding: 2.5rem 0;
     text-align: center;
     /* Smooth transition from home section */
     z-index: 1;
@@ -1507,8 +1542,8 @@ body {
     top: 10px;
     left: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1522,8 +1557,8 @@ body {
     top: 10px;
     right: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1534,11 +1569,11 @@ body {
 
 .wedding-prayer-section .prayer-rose-bottom-left {
     position: absolute;
-    bottom: 120px;
+    bottom: 180px;
     left: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1549,11 +1584,11 @@ body {
 
 .wedding-prayer-section .prayer-rose-bottom-right {
     position: absolute;
-    bottom: 120px;
+    bottom: 180px;
     right: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1598,9 +1633,9 @@ body {
 .wedding-prayer-card {
     background: rgba(20, 20, 20, 0.8);
     border-radius: 20px;
-    padding: 3rem 2rem;
-    margin: 0 auto 3rem;
-    max-width: 800px;
+    padding: 2rem 1.5rem;
+    margin: 0 auto 2rem;
+    max-width: 700px;
     border: 1px solid rgba(192, 192, 192, 0.2);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     position: relative;
@@ -1631,14 +1666,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
-    height: 120px;
+    margin-bottom: 1.5rem;
+    height: 90px;
     /* Removed CSS animation to let AOS handle it */
 }
 
 .plant-svg {
-    width: 200px;
-    height: 140px;
+    width: 150px;
+    height: 105px;
     opacity: 0.9;
     filter: drop-shadow(0 0 15px rgba(192, 192, 192, 0.4));
     animation: bouquetFloat 5s ease-in-out infinite;
@@ -1652,37 +1687,37 @@ body {
 
 .quran-verse-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: var(--text-color);
-    line-height: 1.8;
+    line-height: 1.7;
     text-align: justify;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     font-weight: 400;
 }
 
 .quran-verse-ref {
     font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--secondary-color);
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     font-weight: 400;
     font-style: italic;
 }
 
 .wedding-prayer-heading {
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     /* Removed CSS animation to let AOS handle it */
 }
 
 .wedding-of-title {
     font-family: 'Great Vibes', cursive;
-    font-size: 3rem;
+    font-size: 2.2rem;
     color: var(--primary-color);
     text-align: center;
     margin: 0;
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-shadow: 
         0 0 20px rgba(192, 192, 192, 0.5),
         0 2px 4px rgba(0, 0, 0, 0.8);
@@ -1690,17 +1725,17 @@ body {
 }
 
 .wedding-prayer-text {
-    margin: 2rem auto 0;
-    max-width: 800px;
-    padding: 0 2rem;
+    margin: 1.5rem auto 0;
+    max-width: 700px;
+    padding: 0 1.5rem;
     /* Removed CSS animation to let AOS handle it */
 }
 
 .prayer-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: var(--text-color);
-    line-height: 1.8;
+    line-height: 1.7;
     text-align: center;
     margin: 0;
     font-weight: 400;
@@ -1780,12 +1815,16 @@ body {
         padding: 3rem 0;
     }
     
-    .wedding-prayer-section .prayer-rose-top-left,
+    .wedding-prayer-section .prayer-rose-top-left {
+        width: 90px;
+        height: 90px;
+    }
+    
     .wedding-prayer-section .prayer-rose-top-right,
     .wedding-prayer-section .prayer-rose-bottom-left,
     .wedding-prayer-section .prayer-rose-bottom-right {
-        width: 60px;
-        height: 60px;
+        width: 90px;
+        height: 90px;
     }
     
     .wedding-prayer-section .prayer-rose-top-left,
@@ -1795,7 +1834,7 @@ body {
     
     .wedding-prayer-section .prayer-rose-bottom-left,
     .wedding-prayer-section .prayer-rose-bottom-right {
-        bottom: 90px;
+        bottom: 140px;
     }
     
     .wedding-prayer-section .prayer-rose-top-left,
@@ -1849,12 +1888,16 @@ body {
 }
 
 @media (max-width: 480px) {
-    .wedding-prayer-section .prayer-rose-top-left,
+    .wedding-prayer-section .prayer-rose-top-left {
+        width: 70px;
+        height: 120px;
+    }
+    
     .wedding-prayer-section .prayer-rose-top-right,
     .wedding-prayer-section .prayer-rose-bottom-left,
     .wedding-prayer-section .prayer-rose-bottom-right {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 120px;
     }
     
     .wedding-prayer-section .prayer-rose-top-left,
@@ -1864,7 +1907,7 @@ body {
     
     .wedding-prayer-section .prayer-rose-bottom-left,
     .wedding-prayer-section .prayer-rose-bottom-right {
-        bottom: 80px;
+        bottom: 120px;
     }
     
     .wedding-prayer-section .prayer-rose-top-left,
@@ -1893,8 +1936,8 @@ body {
     top: 10px;
     left: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1908,8 +1951,8 @@ body {
     top: 10px;
     right: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1923,8 +1966,8 @@ body {
     bottom: 120px;
     left: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1938,8 +1981,8 @@ body {
     bottom: 120px;
     right: -20px;
     z-index: 100;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
     opacity: 1 !important;
     visibility: visible !important;
@@ -2318,6 +2361,15 @@ body {
 .event-date .month-year {
     font-size: 1rem;
     color: var(--text-color);
+}
+
+/* Perbesar tanggal "14 DESEMBER 2025" yang menggunakan kedua class */
+.event-date .date-number.month-year {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
 }
 
 .event-time,
@@ -3887,7 +3939,95 @@ body {
     background-attachment: fixed;
     text-align: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+}
+
+/* Mawar untuk Quote Section */
+.quote-section .quote-rose-top-left {
+    position: absolute;
+    top: 10px;
+    left: -35px;
+    z-index: 100;
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.quote-section .quote-rose-top-right {
+    position: absolute;
+    top: 10px;
+    right: -35px;
+    z-index: 100;
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.quote-section .quote-rose-bottom-left {
+    position: absolute;
+    bottom: 120px;
+    left: -35px;
+    z-index: 100;
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.quote-section .quote-rose-bottom-right {
+    position: absolute;
+    bottom: 120px;
+    right: -35px;
+    z-index: 100;
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.quote-rose-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: 
+        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transform: translateZ(0) perspective(1000px) rotate(180deg);
+    transform-style: preserve-3d;
+    animation: roseFloat 6s ease-in-out infinite;
+}
+
+/* Rotasi untuk mawar kanan */
+.quote-section .quote-rose-top-right .quote-rose-image,
+.quote-section .quote-rose-bottom-right .quote-rose-image {
+    transform: translateZ(0) perspective(1000px) rotate(180deg) scaleX(-1);
+    animation: roseFloatRight 6s ease-in-out infinite;
+}
+
+/* Rotasi untuk mawar kiri bawah */
+.quote-section .quote-rose-bottom-left .quote-rose-image {
+    transform: translateZ(0) perspective(1000px) rotate(180deg);
+    animation: roseFloat 6s ease-in-out infinite;
 }
 
 .quote-section::before {
@@ -4283,8 +4423,37 @@ body {
     .mempelai-section .mempelai-rose-top-right,
     .mempelai-section .mempelai-rose-bottom-left,
     .mempelai-section .mempelai-rose-bottom-right {
-        width: 60px;
-        height: 60px;
+        width: 90px;
+        height: 110px;
+    }
+    
+    /* Mawar Quote Section - Responsive */
+    .quote-section .quote-rose-top-left,
+    .quote-section .quote-rose-top-right,
+    .quote-section .quote-rose-bottom-left,
+    .quote-section .quote-rose-bottom-right {
+        width: 90px;
+        height: 110px;
+    }
+    
+    .quote-section .quote-rose-top-left,
+    .quote-section .quote-rose-top-right {
+        top: 5px;
+    }
+    
+    .quote-section .quote-rose-bottom-left,
+    .quote-section .quote-rose-bottom-right {
+        bottom: 90px;
+    }
+    
+    .quote-section .quote-rose-top-left,
+    .quote-section .quote-rose-bottom-left {
+        left: -30px;
+    }
+    
+    .quote-section .quote-rose-top-right,
+    .quote-section .quote-rose-bottom-right {
+        right: -30px;
     }
     
     .mempelai-section .mempelai-rose-top-left,
@@ -4385,7 +4554,11 @@ body {
     .events-container {
         grid-template-columns: 1fr;
     }
-
+    
+    /* Responsive untuk tanggal "14 DESEMBER 2025" */
+    .event-date .date-number.month-year {
+        font-size: 1.5rem;
+    }
 
     .section {
         padding: 3rem 1rem;
@@ -4438,6 +4611,11 @@ body {
 
     .galeri-thumbnail-placeholder {
         font-size: 0.8rem;
+    }
+    
+    /* Responsive untuk tanggal "14 DESEMBER 2025" - Mobile */
+    .event-date .date-number.month-year {
+        font-size: 1.6rem;
     }
 
     .galeri-title {
