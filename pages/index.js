@@ -1520,49 +1520,6 @@ export default function Home() {
                     }}
                   />
                 </div>
-                {/* Bunga Mawar Merah Maroon - Quote Section */}
-                <div className="quote-rose-decoration" data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
-                  {/* Bunga Mawar Kiri */}
-                  <div className="quote-rose quote-rose-left">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                      {/* Kelopak luar */}
-                      <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                      <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                      <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
-                      {/* Kelopak tengah */}
-                      <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                      <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                      {/* Kelopak dalam */}
-                      <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
-                      <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
-                      {/* Daun */}
-                      <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
-                      <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
-                      {/* Batang */}
-                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" strokeWidth="3" opacity="0.7" />
-                    </svg>
-                  </div>
-                  {/* Bunga Mawar Kanan */}
-                  <div className="quote-rose quote-rose-right">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                      {/* Kelopak luar */}
-                      <path d="M50,30 Q40,20 30,25 Q20,30 25,40 Q30,50 40,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                      <path d="M50,30 Q60,20 70,25 Q80,30 75,40 Q70,50 60,45 Q50,40 50,30 Z" fill="#800020" opacity="0.9" />
-                      <path d="M50,30 Q45,15 50,20 Q55,15 50,30 Z" fill="#800020" opacity="0.9" />
-                      {/* Kelopak tengah */}
-                      <path d="M50,40 Q45,35 40,38 Q35,40 38,45 Q40,50 45,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                      <path d="M50,40 Q55,35 60,38 Q65,40 62,45 Q60,50 55,48 Q50,45 50,40 Z" fill="#A00030" opacity="0.95" />
-                      {/* Kelopak dalam */}
-                      <path d="M50,50 Q48,45 46,48 Q44,50 46,52 Q48,54 50,52 Q50,50 50,50 Z" fill="#C00040" opacity="1" />
-                      <circle cx="50" cy="55" r="4" fill="#FFD700" opacity="0.8" />
-                      {/* Daun */}
-                      <path d="M35,70 Q30,65 25,70 Q30,75 35,70 Z" fill="#2d5016" opacity="0.8" />
-                      <path d="M65,70 Q70,65 75,70 Q70,75 65,70 Z" fill="#2d5016" opacity="0.8" />
-                      {/* Batang */}
-                      <line x1="50" y1="55" x2="50" y2="100" stroke="#2d5016" strokeWidth="3" opacity="0.7" />
-                    </svg>
-                  </div>
-                </div>
               </div>
               <h3 className="quote-signature" data-aos="fade-up" data-aos-delay="250" data-aos-duration="300">Surya & Isna</h3>
             </div>

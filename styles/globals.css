@@ -867,34 +867,6 @@ body {
         height: 70px;
     }
     
-    /* Mawar Quote Section - Mobile */
-    .quote-section .quote-rose-top-left,
-    .quote-section .quote-rose-top-right,
-    .quote-section .quote-rose-bottom-left,
-    .quote-section .quote-rose-bottom-right {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .quote-section .quote-rose-top-left,
-    .quote-section .quote-rose-top-right {
-        top: 3px;
-    }
-    
-    .quote-section .quote-rose-bottom-left,
-    .quote-section .quote-rose-bottom-right {
-        bottom: 80px;
-    }
-    
-    .quote-section .quote-rose-top-left,
-    .quote-section .quote-rose-bottom-left {
-        left: -25px;
-    }
-    
-    .quote-section .quote-rose-top-right,
-    .quote-section .quote-rose-bottom-right {
-        right: -25px;
-    }
     
     .mempelai-section .mempelai-rose-top-left,
     .mempelai-section .mempelai-rose-top-right {
@@ -3943,92 +3915,7 @@ body {
 }
 
 /* Mawar untuk Quote Section */
-.quote-section .quote-rose-top-left {
-    position: absolute;
-    top: 10px;
-    left: -35px;
-    z-index: 100;
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-}
 
-.quote-section .quote-rose-top-right {
-    position: absolute;
-    top: 10px;
-    right: -35px;
-    z-index: 100;
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-}
-
-.quote-section .quote-rose-bottom-left {
-    position: absolute;
-    bottom: 120px;
-    left: -35px;
-    z-index: 100;
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-}
-
-.quote-section .quote-rose-bottom-right {
-    position: absolute;
-    bottom: 120px;
-    right: -35px;
-    z-index: 100;
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-}
-
-.quote-rose-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    filter: 
-        drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-    transform: translateZ(0) perspective(1000px) rotate(180deg);
-    transform-style: preserve-3d;
-    animation: roseFloat 6s ease-in-out infinite;
-}
-
-/* Rotasi untuk mawar kanan */
-.quote-section .quote-rose-top-right .quote-rose-image,
-.quote-section .quote-rose-bottom-right .quote-rose-image {
-    transform: translateZ(0) perspective(1000px) rotate(180deg) scaleX(-1);
-    animation: roseFloatRight 6s ease-in-out infinite;
-}
-
-/* Rotasi untuk mawar kiri bawah */
-.quote-section .quote-rose-bottom-left .quote-rose-image {
-    transform: translateZ(0) perspective(1000px) rotate(180deg);
-    animation: roseFloat 6s ease-in-out infinite;
-}
 
 .quote-section::before {
     content: '';
@@ -4052,7 +3939,6 @@ body {
 .quote-text[data-aos]:not(.aos-animate),
 .quote-note[data-aos]:not(.aos-animate),
 .quote-photo-container[data-aos]:not(.aos-animate),
-.quote-rose-decoration[data-aos]:not(.aos-animate),
 .quote-signature[data-aos]:not(.aos-animate) {
     /* Let AOS handle initial opacity - remove override */
     opacity: 0 !important;
@@ -4075,7 +3961,6 @@ body {
 .quote-text[data-aos],
 .quote-note[data-aos],
 .quote-photo-container[data-aos],
-.quote-rose-decoration[data-aos],
 .quote-signature[data-aos] {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -4085,7 +3970,6 @@ body {
 .quote-text[data-aos].aos-animate,
 .quote-note[data-aos].aos-animate,
 .quote-photo-container[data-aos].aos-animate,
-.quote-rose-decoration[data-aos].aos-animate,
 .quote-signature[data-aos].aos-animate {
     opacity: 1 !important;
     transform: translateY(0) translateZ(0) !important;
@@ -4164,63 +4048,6 @@ body {
     backface-visibility: hidden;
     transform: translateZ(0);
     opacity: 1;
-}
-
-.quote-rose-decoration {
-    position: relative;
-    width: 200px;
-    height: 80px;
-    margin-top: -10px;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-}
-
-.quote-rose {
-    position: relative;
-    width: 50px;
-    height: 70px;
-    filter: drop-shadow(0 3px 6px rgba(128, 0, 32, 0.4));
-}
-
-.quote-rose svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
-.quote-rose-left {
-    transform: rotate(-10deg);
-    animation: quoteRoseSwayLeft 4s ease-in-out infinite;
-}
-
-.quote-rose-right {
-    transform: rotate(10deg);
-    animation: quoteRoseSwayRight 4s ease-in-out infinite;
-}
-
-@keyframes quoteRoseSwayLeft {
-    0%, 100% { 
-        transform: rotate(-10deg) translateY(0); 
-        opacity: 0.9; 
-    }
-    50% { 
-        transform: rotate(-5deg) translateY(3px); 
-        opacity: 1; 
-    }
-}
-
-@keyframes quoteRoseSwayRight {
-    0%, 100% { 
-        transform: rotate(10deg) translateY(0); 
-        opacity: 0.9; 
-    }
-    50% { 
-        transform: rotate(5deg) translateY(3px); 
-        opacity: 1; 
-    }
 }
 
 .quote-signature {
@@ -4427,34 +4254,6 @@ body {
         height: 110px;
     }
     
-    /* Mawar Quote Section - Responsive */
-    .quote-section .quote-rose-top-left,
-    .quote-section .quote-rose-top-right,
-    .quote-section .quote-rose-bottom-left,
-    .quote-section .quote-rose-bottom-right {
-        width: 90px;
-        height: 110px;
-    }
-    
-    .quote-section .quote-rose-top-left,
-    .quote-section .quote-rose-top-right {
-        top: 5px;
-    }
-    
-    .quote-section .quote-rose-bottom-left,
-    .quote-section .quote-rose-bottom-right {
-        bottom: 90px;
-    }
-    
-    .quote-section .quote-rose-top-left,
-    .quote-section .quote-rose-bottom-left {
-        left: -30px;
-    }
-    
-    .quote-section .quote-rose-top-right,
-    .quote-section .quote-rose-bottom-right {
-        right: -30px;
-    }
     
     .mempelai-section .mempelai-rose-top-left,
     .mempelai-section .mempelai-rose-top-right {
