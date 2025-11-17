@@ -722,7 +722,7 @@ export default function Home() {
         }}
         onEnded={() => setIsMusicPlaying(false)}
       >
-        <source src="/audio/mr.kitty - after dark.mp3" type="audio/mpeg" />
+        <source src="/audio/after dark - mr.kitty.mp3" type="audio/mpeg" />
         Browser Anda tidak mendukung audio.
       </audio>
 
@@ -851,46 +851,6 @@ export default function Home() {
               <div className="leaf-decoration leaf-top-right"></div>
               <div className="leaf-decoration leaf-bottom-left"></div>
             </div>
-            {/* Mawar Pojok Kiri Atas */}
-            <div className="home-rose-top-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="home-rose-image"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Atas */}
-            <div className="home-rose-top-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="home-rose-image"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kiri Bawah */}
-            <div className="home-rose-bottom-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="home-rose-image"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Bawah */}
-            <div className="home-rose-bottom-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="home-rose-image"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
             <div className="container">
               <h2 className="home-section-title">The Wedding</h2>
               <div className="couple-photo-container">
@@ -1005,46 +965,6 @@ export default function Home() {
 
           {/* Wedding Prayer Section */}
           <section id="wedding-prayer" className="section wedding-prayer-section" data-aos="fade-up" data-aos-offset="50" data-aos-duration="250">
-            {/* Mawar Pojok Kiri Atas */}
-            <div className="prayer-rose-top-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="prayer-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Atas */}
-            <div className="prayer-rose-top-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="prayer-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kiri Bawah */}
-            <div className="prayer-rose-bottom-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="prayer-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Bawah */}
-            <div className="prayer-rose-bottom-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="prayer-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
             <div className="container">
               <div className="wedding-prayer-card" data-aos="fade-up" data-aos-duration="250">
                 {/* Decorative Wedding Bouquet - Minimalist Elegant */}
@@ -1126,46 +1046,6 @@ export default function Home() {
 
           {/* Mempelai Section */}
           <section id="mempelai" className="section mempelai-section" data-aos="fade-up">
-            {/* Mawar Pojok Kiri Atas */}
-            <div className="mempelai-rose-top-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="mempelai-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Atas */}
-            <div className="mempelai-rose-top-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="mempelai-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kiri Bawah */}
-            <div className="mempelai-rose-bottom-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="mempelai-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Bawah */}
-            <div className="mempelai-rose-bottom-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="mempelai-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
             <div className="container">
               <h2 className="mempelai-section-title" data-aos="fade-down">Mempelai</h2>
               <p className="mempelai-subtitle" data-aos="fade-down" data-aos-delay="100">Pria & Wanita</p>
@@ -1614,46 +1494,6 @@ export default function Home() {
 
           {/* Quote Section */}
           <section className="section quote-section" data-aos="fade-up" data-aos-offset="100" data-aos-duration="400">
-            {/* Mawar Pojok Kiri Atas */}
-            <div className="quote-rose-top-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="quote-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Atas */}
-            <div className="quote-rose-top-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="quote-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kiri Bawah */}
-            <div className="quote-rose-bottom-left">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="quote-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Mawar Pojok Kanan Bawah */}
-            <div className="quote-rose-bottom-right">
-              <img 
-                src="/images/mawar5.png" 
-                alt="Rose Decoration" 
-                className="quote-rose-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
             <div className="container">
               <p className="quote-text" data-aos="fade-up" data-aos-delay="50" data-aos-duration="300">
                 "Kita adalah "ketersalingan". Saling mengisi kekosongan, saling melengkapi, saling membersamai, dan
